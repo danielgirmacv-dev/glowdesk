@@ -377,7 +377,7 @@
                      </template>
                  </div>
 
-                 <form action="{{ route('orders.store') }}" method="POST" class="space-y-4">
+                 <form action="{{ route('orders.store') }}" method="POST" class="space-y-4" x-data="{ isSubmitting: false }" @submit="isSubmitting = true">
                      @csrf
                      
                      <!-- Dynamic payload logic -->
@@ -401,15 +401,9 @@
                          <input type="text" name="customer_name" required placeholder="Full Name" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
                      </div>
                      
-                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                         <div>
-                             <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Department</label>
-                             <input type="text" name="department" placeholder="e.g. Sales, IT" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
-                         </div>
-                         <div>
-                             <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Phone</label>
-                             <input type="text" name="phone" required placeholder="+251..." class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
-                         </div>
+                     <div>
+                         <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
+                         <input type="text" name="phone" required placeholder="+251..." class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
                      </div>
                      
                      <div>
@@ -420,11 +414,22 @@
                      </div>
 
                      <div class="pt-4 flex gap-3">
-                         <button type="submit" class="w-full relative group overflow-hidden rounded-xl bg-[#7c3aed] text-white py-3.5 font-bold transition hover:bg-[#6d28d9] shadow-[0_0_20px_rgba(124,58,237,0.3)]">
-                             <span class="relative z-10 flex items-center justify-center gap-2">
-                                 Complete Order
-                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                             </span>
+                         <button type="submit" :disabled="isSubmitting" class="w-full relative group overflow-hidden rounded-xl bg-[#7c3aed] text-white py-3.5 font-bold transition hover:bg-[#6d28d9] shadow-[0_0_20px_rgba(124,58,237,0.3)] disabled:opacity-60 disabled:cursor-not-allowed">
+                             <template x-if="!isSubmitting">
+                                 <span class="relative z-10 flex items-center justify-center gap-2">
+                                     Complete Order
+                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                 </span>
+                             </template>
+                             <template x-if="isSubmitting">
+                                 <span class="relative z-10 flex items-center justify-center gap-2">
+                                     <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                     </svg>
+                                     Processing Order…
+                                 </span>
+                             </template>
                          </button>
                      </div>
                  </form>
