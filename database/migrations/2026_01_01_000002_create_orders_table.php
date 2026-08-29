@@ -11,8 +11,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('customer_name');
-            $table->string('department');
+            $table->string('department')->nullable();
             $table->string('phone');
+            $table->string('telegram_username')->nullable();
             $table->string('status')->default('pending');
             $table->decimal('total_amount', 10, 2);
             $table->timestamps();
