@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    // Admin password for the internal admin panel
+    'admin_password' => env('ADMIN_PASSWORD', 'secret123'),
+
 ];
