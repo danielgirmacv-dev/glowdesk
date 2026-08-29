@@ -40,5 +40,5 @@ RUN mkdir -p storage/app/public/products storage/framework/cache storage/framewo
 
 EXPOSE 8000
 
-# Start command: link storage, migrate database, and serve application
-CMD ["sh", "-c", "php artisan storage:link --force && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"]
+# Start command: link storage, auto-migrate database (with fallback wipe if previous migration failed), and serve application
+CMD ["sh", "-c", "php artisan storage:link --force && (php artisan migrate --force || (php artisan db:wipe --force && php artisan migrate --force)) && php artisan serve --host=0.0.0.0 --port=8000"]
