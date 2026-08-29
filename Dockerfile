@@ -32,12 +32,12 @@ RUN composer install --no-dev --optimize-autoloader
 # Install Node dependencies and build Vite assets
 RUN npm install && npm run build
 
-# Setup SQLite database and permissions
-RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views database \
+# Setup SQLite database, storage directories, and permissions
+RUN mkdir -p storage/app/public/products storage/framework/cache storage/framework/sessions storage/framework/views database \
     && touch database/database.sqlite \
     && chmod -R 777 storage bootstrap/cache database
 
 EXPOSE 8000
 
-# Start command
-CMD ["sh", "-c", "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"]
+# Start command: link storage, migrate database, and serve application
+CMD ["sh", "-c", "php artisan storage:link --force && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"]
