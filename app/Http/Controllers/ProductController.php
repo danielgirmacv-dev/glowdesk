@@ -89,8 +89,10 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image_url'] = '/storage/' . $path;
+            $uploadedUrl = $this->handleImageUpload($request);
+            if ($uploadedUrl) {
+                $validated['image_url'] = $uploadedUrl;
+            }
         }
 
         Product::create($validated);
@@ -114,13 +116,79 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image_url'] = '/storage/' . $path;
+            $uploadedUrl = $this->handleImageUpload($request);
+            if ($uploadedUrl) {
+                $validated['image_url'] = $uploadedUrl;
+            }
         }
 
         $product->update($validated);
         return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
     }
+
+    private function handleImageUpload(Request $request): ?string
+    {
+        if (!$request->hasFile('image')) {
+            return null;
+        }
+
+        $cloudName = env('CLOUDINARY_CLOUD_NAME');
+        $uploadPreset = env('CLOUDINARY_UPLOAD_PRESET');
+        $cloudinaryUrl = env('CLOUDINARY_URL');
+
+        // Strategy 1: Cloudinary Unsigned Upload Preset (Easiest & Free)
+        if ($cloudName && $uploadPreset) {
+            try {
+                $response = \Illuminate\Support\Facades\Http::attach(
+                    'file',
+                    file_get_contents($request->file('image')->getRealPath()),
+                    $request->file('image')->getClientOriginalName()
+                )->post("https://api.cloudinary.com/v1_1/{$cloudName}/image/upload", [
+                    'upload_preset' => $uploadPreset,
+                ]);
+
+                if ($response->successful()) {
+                    return $response->json('secure_url');
+                }
+            } catch (\Exception $e) {
+                // Fallback to local storage on error
+            }
+        }
+
+        // Strategy 2: Cloudinary URL (cloudinary://API_KEY:API_SECRET@CLOUD_NAME)
+        if ($cloudinaryUrl) {
+            try {
+                $parsed = parse_url($cloudinaryUrl);
+                $cName = $parsed['host'] ?? null;
+                $cKey = $parsed['user'] ?? null;
+                $cSecret = $parsed['pass'] ?? null;
+                if ($cName && $cKey && $cSecret) {
+                    $timestamp = time();
+                    $signature = sha1("timestamp={$timestamp}" . $cSecret);
+                    $response = \Illuminate\Support\Facades\Http::attach(
+                        'file',
+                        file_get_contents($request->file('image')->getRealPath()),
+                        $request->file('image')->getClientOriginalName()
+                    )->post("https://api.cloudinary.com/v1_1/{$cName}/image/upload", [
+                        'api_key' => $cKey,
+                        'timestamp' => $timestamp,
+                        'signature' => $signature,
+                    ]);
+
+                    if ($response->successful()) {
+                        return $response->json('secure_url');
+                    }
+                }
+            } catch (\Exception $e) {
+                // Fallback to local storage on error
+            }
+        }
+
+        // Fallback: Local storage
+        $path = $request->file('image')->store('products', 'public');
+        return '/storage/' . $path;
+    }
+
 
     public function destroy(Product $product)
     {
