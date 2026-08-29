@@ -50,7 +50,7 @@ class OrderController extends Controller
         }
 
         if (!is_array($cartItems) || empty($cartItems)) {
-            return redirect()->back()->with('error', 'No items selected.');
+            return redirect()->route('shop.index')->with('error', 'No items selected.');
         }
 
         DB::beginTransaction();
@@ -106,8 +106,9 @@ class OrderController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Something went wrong while placing your order: ' . $e->getMessage());
+            return redirect()->route('shop.index')->with('error', 'Something went wrong while placing your order: ' . $e->getMessage());
         }
+
     }
 
     // Admin routes

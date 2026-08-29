@@ -12,6 +12,7 @@ use App\Http\Middleware\BasicAdminAuth;
 Route::middleware([RestrictLan::class])->group(function () {
     
     Route::get('/', [ProductController::class, 'index'])->name('shop.index');
+    Route::get('/orders', function () { return redirect()->route('shop.index'); });
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::post('/custom-request', [OrderController::class, 'submitCustomRequest'])->name('custom-request.store');
     
