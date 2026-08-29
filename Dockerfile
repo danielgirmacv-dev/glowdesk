@@ -1,6 +1,6 @@
 FROM php:8.2-alpine
 
-# Install system dependencies, PHP extensions (including gd for Excel/phpspreadsheet), and Node.js
+# Install system dependencies, PHP extensions (including gd, pdo_pgsql, pdo_mysql, pdo_sqlite), and Node.js
 RUN apk add --no-cache \
     curl \
     git \
@@ -14,9 +14,10 @@ RUN apk add --no-cache \
     npm \
     sqlite-dev \
     sqlite \
+    postgresql-dev \
     oniguruma-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_sqlite pdo_mysql bcmath mbstring zip gd
+    && docker-php-ext-install pdo pdo_sqlite pdo_mysql pdo_pgsql bcmath mbstring zip gd
 
 # Copy Composer from official image
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
