@@ -40,4 +40,7 @@ return [
         'chat_id' => env('TELEGRAM_CHAT_ID'),
     ],
 
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+    ],
 ];

@@ -19,7 +19,7 @@ class ChatbotController extends Controller
         $userMsg = $request->input('message');
         $products = Product::where('is_active', true)->get(['name']);
         
-        $apiKey = env('GEMINI_API_KEY');
+        $apiKey = config('services.gemini.api_key') ?: env('GEMINI_API_KEY');
 
         // Build product list for system instruction
         $productList = "";
@@ -97,10 +97,10 @@ respond in a friendly, helpful way as GlowBot.
             ];
 
             try {
-                // Using gemini-2.0-flash endpoint
+                // Using gemini-3.6-flash endpoint
                 $response = Http::timeout(8)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . $apiKey, $payload);
+                ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=' . $apiKey, $payload);
 
                 if ($response->successful()) {
                     $data = $response->json();
