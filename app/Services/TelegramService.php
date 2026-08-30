@@ -129,4 +129,61 @@ class TelegramService
             Log::error('Failed to send Telegram custom request notification: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Verifies the initData string sent from Telegram WebApp SDK using HMAC-SHA256.
+     */
+    public function verifyWebAppData(string $initData): bool
+    {
+        if (empty($this->botToken) || empty($initData)) {
+            return false;
+        }
+
+        parse_str($initData, $data);
+        if (!isset($data['hash'])) {
+            return false;
+        }
+
+        $hash = $data['hash'];
+        unset($data['hash']);
+
+        $dataCheckArr = [];
+        foreach ($data as $key => $value) {
+            $dataCheckArr[] = $key . '=' . $value;
+        }
+        sort($dataCheckArr);
+
+        $dataCheckString = implode("\n", $dataCheckArr);
+        $secretKey = hash_hmac('sha256', $this->botToken, 'WebAppData', true);
+        $calculatedHash = hash_hmac('sha256', $dataCheckString, $secretKey);
+
+        return hash_equals(bin2hex($calculatedHash), $hash);
+    }
+
+    /**
+     * Configures Telegram bot's menu button to open GlowDesk WebApp.
+     */
+    public function setupChatMenuButton(string $webAppUrl, string $buttonText = 'Open GlowDesk'): array
+    {
+        if (!$this->botToken) {
+            return ['success' => false, 'message' => 'Bot token is missing'];
+        }
+
+        $url = "https://api.telegram.org/bot{$this->botToken}/setChatMenuButton";
+        
+        $response = Http::post($url, [
+            'menu_button' => [
+                'type' => 'web_app',
+                'text' => $buttonText,
+                'web_app' => [
+                    'url' => $webAppUrl
+                ]
+            ]
+        ]);
+
+        return [
+            'success' => $response->successful(),
+            'body' => $response->json()
+        ];
+    }
 }

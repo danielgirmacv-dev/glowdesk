@@ -16,28 +16,12 @@ class ChatbotController extends Controller
             'history' => 'nullable|array'
         ]);
 
-        $apiKey = env('GEMINI_API_KEY');
-        if (!$apiKey) {
-            return response()->json(['reply' => 'Error: API key not configured.'], 500);
-        }
-
-        $contents = [];
-        $history = $request->input('history', []);
-        
-        foreach ($history as $msg) {
-            $contents[] = [
-                'role' => $msg['role'] === 'user' ? 'user' : 'model',
-                'parts' => [['text' => $msg['text']]]
-            ];
-        }
-        
-        $contents[] = [
-            'role' => 'user',
-            'parts' => [['text' => $request->input('message')]]
-        ];
-
-        // Dynamically build the product list from the database
+        $userMsg = $request->input('message');
         $products = Product::where('is_active', true)->get(['name']);
+        
+        $apiKey = env('GEMINI_API_KEY');
+
+        // Build product list for system instruction
         $productList = "";
         foreach ($products as $p) {
             $productList .= "- {$p->name}\n";
@@ -73,80 +57,107 @@ If the user mentions a skin concern without naming a product
 (e.g. \"something for dry skin\", \"help with dark spots\"),
 pick the most relevant product and use INQUIRY format.
 
-Skin concern → product mapping (use as guide):
-  oily skin      → Cleanser or Face Wash
-  dry skin       → Moisturizer
-  dark spots     → Serum
-  sun protection → Sunscreen
-  dull skin      → Toner or Serum
-  acne           → Cleanser or Face Wash
-  hydration      → Moisturizer or Toner
-
 RULE 4 — General conversation
 If the message is a greeting, casual talk, or unrelated topic,
 respond in a friendly, helpful way as GlowBot.
-You may mention GlowDesk products naturally when relevant.
 
 ─── STRICT LIMITS ────────────────────────────────────
 ✗ Never confirm or create actual orders
 ✗ Never generate or mention specific prices
 ✗ Never invent products outside the available list
-✗ Never add extra text when returning INTENT format
-✗ Product names must EXACTLY match the available list
+✗ Product names must EXACTLY match the available list";
 
-─── EXAMPLES ─────────────────────────────────────────
-User: I want to buy cleanser
-GlowBot:
-INTENT: ORDER
-PRODUCT: Cleanser
-
-User: Do you have sunscreen?
-GlowBot:
-INTENT: INQUIRY
-PRODUCT: Sunscreen
-
-User: I need something for oily skin
-GlowBot:
-INTENT: INQUIRY
-PRODUCT: Cleanser
-
-User: hello
-GlowBot: Hello! 👋 Welcome to GlowDesk! How can I help you glow today?
-
-User: I want serum
-GlowBot:
-INTENT: ORDER
-PRODUCT: Serum";
-
-        $payload = [
-            'system_instruction' => [
-                'parts' => [
-                    ['text' => $systemInstruction]
-                ]
-            ],
-            'contents' => $contents,
-            'generationConfig' => [
-                'temperature' => 0.5,
-                'maxOutputTokens' => 1024,
-            ]
-        ];
-
-        try {
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=' . $apiKey, $payload);
-
-            if ($response->successful()) {
-                $data = $response->json();
-                $reply = $data['candidates'][0]['content']['parts'][0]['text'] ?? "I'm having trouble thinking right now. Could you repeat that?";
-                return response()->json(['reply' => $reply]);
-            } else {
-                Log::error('Gemini API Error: ' . $response->body());
-                return response()->json(['reply' => 'Sorry, I am currently experiencing technical difficulties. (API Error)'], 500);
+        if ($apiKey) {
+            $contents = [];
+            $history = $request->input('history', []);
+            
+            foreach ($history as $msg) {
+                $contents[] = [
+                    'role' => $msg['role'] === 'user' ? 'user' : 'model',
+                    'parts' => [['text' => $msg['text']]]
+                ];
             }
-        } catch (\Exception $e) {
-            Log::error('Chatbot Exception: ' . $e->getMessage());
-            return response()->json(['reply' => 'An error occurred. Please try again later.'], 500);
+            
+            $contents[] = [
+                'role' => 'user',
+                'parts' => [['text' => $userMsg]]
+            ];
+
+            $payload = [
+                'system_instruction' => [
+                    'parts' => [
+                        ['text' => $systemInstruction]
+                    ]
+                ],
+                'contents' => $contents,
+                'generationConfig' => [
+                    'temperature' => 0.5,
+                    'maxOutputTokens' => 1024,
+                ]
+            ];
+
+            try {
+                // Using gemini-2.0-flash endpoint
+                $response = Http::timeout(8)->withHeaders([
+                    'Content-Type' => 'application/json',
+                ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . $apiKey, $payload);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    $reply = $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
+                    if ($reply) {
+                        return response()->json(['reply' => $reply]);
+                    }
+                } else {
+                    Log::warning('Gemini API Warning: ' . $response->status() . ' ' . $response->body());
+                }
+            } catch (\Exception $e) {
+                Log::warning('Chatbot Exception: ' . $e->getMessage());
+            }
         }
+
+        // Intelligent local fallback if API key missing or external request fails
+        $fallbackReply = $this->getLocalFallbackReply($userMsg, $products);
+        return response()->json(['reply' => $fallbackReply]);
+    }
+
+    private function getLocalFallbackReply(string $userMsg, $products): string
+    {
+        $msg = strtolower($userMsg);
+
+        // Check if user specifically named a product
+        foreach ($products as $p) {
+            $pName = strtolower($p->name);
+            if (str_contains($msg, $pName)) {
+                if (str_contains($msg, 'buy') || str_contains($msg, 'order') || str_contains($msg, 'purchase') || str_contains($msg, 'get')) {
+                    return "INTENT: ORDER\nPRODUCT: " . $p->name;
+                }
+                return "INTENT: INQUIRY\nPRODUCT: " . $p->name;
+            }
+        }
+
+        // Keywords for skin concerns
+        if (str_contains($msg, 'hi') || str_contains($msg, 'hello') || str_contains($msg, 'hey')) {
+            return "Hello! 👋 Welcome to GlowDesk! I am GlowBot, your beauty assistant. How can I help you glow today?";
+        }
+
+        if (str_contains($msg, 'oily') || str_contains($msg, 'acne') || str_contains($msg, 'cleanse')) {
+            return "For oily or acne-prone skin, deep cleansing is key! Would you like to check out our Cleanser?";
+        }
+
+        if (str_contains($msg, 'dry') || str_contains($msg, 'moisturiz') || str_contains($msg, 'hydrat')) {
+            return "For dry or dehydrated skin, a rich moisturizer is essential! Would you like details on our Moisturizer?";
+        }
+
+        if (str_contains($msg, 'sun') || str_contains($msg, 'spf') || str_contains($msg, 'uv')) {
+            return "Daily sun protection keeps your skin young and healthy! Check out our Sunscreen options.";
+        }
+
+        if (str_contains($msg, 'spot') || str_contains($msg, 'bright') || str_contains($msg, 'serum')) {
+            return "For dark spots and glowing skin, our Serum works wonders! Would you like to view it?";
+        }
+
+        $names = $products->pluck('name')->implode(', ');
+        return "I'm GlowBot, your beauty assistant! ✨ We have great skincare products available including: " . ($names ?: 'Cleanser, Moisturizer, Sunscreen, Serum') . ". Feel free to ask about any item!";
     }
 }

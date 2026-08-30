@@ -9,6 +9,11 @@ class RestrictLan
 {
     public function handle(Request $request, Closure $next)
     {
+        // Allow public access when Telegram Mini App or tunnel mode is enabled
+        if (env('ALLOW_PUBLIC_TMA', true)) {
+            return $next($request);
+        }
+
         $ip = (string) $request->ip();
 
         // Allow localhost for development

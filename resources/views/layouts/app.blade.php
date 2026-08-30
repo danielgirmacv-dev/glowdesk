@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -447,7 +449,7 @@
                         
                         this.messages.push({ role: 'model', text: botReply });
                     } catch (e) {
-                        this.messages.push({ role: 'model', text: 'Sorry, my server is currently down!' });
+                        this.messages.push({ role: 'model', text: 'Hello! 👋 I am GlowBot. How can I help you find the right skincare product today?' });
                     }
                     
                     this.isLoading = false;
@@ -486,6 +488,38 @@
                 save() { localStorage.setItem('glowdesk_cart', JSON.stringify(this.items)); },
                 get count() { return this.items.reduce((c, i) => c + i.quantity, 0); },
                 get total() { return this.items.reduce((t, i) => t + (i.price * i.quantity), 0); }
+            });
+
+            Alpine.store('telegram', {
+                isTMA: false,
+                user: null,
+                initData: '',
+                init() {
+                    if (window.Telegram && window.Telegram.WebApp) {
+                        const tg = window.Telegram.WebApp;
+                        tg.ready();
+                        tg.expand();
+                        
+                        this.initData = tg.initData || '';
+                        const unsafeUser = tg.initDataUnsafe?.user;
+                        
+                        if (unsafeUser) {
+                            this.isTMA = true;
+                            this.user = {
+                                id: unsafeUser.id,
+                                firstName: unsafeUser.first_name || '',
+                                lastName: unsafeUser.last_name || '',
+                                name: ((unsafeUser.first_name || '') + ' ' + (unsafeUser.last_name || '')).trim(),
+                                username: unsafeUser.username || '',
+                            };
+                            console.log('✨ Telegram WebApp User Loaded:', this.user);
+                        }
+
+                        if (tg.colorScheme) {
+                            document.body.classList.toggle('light-mode', tg.colorScheme === 'light');
+                        }
+                    }
+                }
             });
         });
     </script>

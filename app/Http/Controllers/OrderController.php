@@ -167,7 +167,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
-            'phone'         => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|min:8',
+            'phone'         => 'required|string|max:50',
             'telegram_username' => 'nullable|string|max:255',
             'request_message' => 'required|string|max:1000',
         ]);
@@ -176,12 +176,16 @@ class OrderController extends Controller
             $validated['telegram_username'] = substr($validated['telegram_username'], 1);
         }
 
-        $this->telegramService->sendCustomRequestNotification(
-            $validated['customer_name'],
-            $validated['phone'],
-            $validated['request_message'],
-            $validated['telegram_username'] ?? null
-        );
+        try {
+            $this->telegramService->sendCustomRequestNotification(
+                $validated['customer_name'],
+                $validated['phone'],
+                $validated['request_message'],
+                $validated['telegram_username'] ?? null
+            );
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Custom request notification dispatch failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('shop.index')->with('success', 'Your custom request has been sent! We will check our stock and get back to you shortly.');
     }

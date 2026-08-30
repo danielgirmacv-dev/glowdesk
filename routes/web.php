@@ -19,6 +19,13 @@ Route::middleware([RestrictLan::class])->group(function () {
     // Chatbot Route
     Route::post('/api/chat', [\App\Http\Controllers\ChatbotController::class, 'invoke'])->name('api.chat');
 
+    // Telegram Mini App Auth Verification Route
+    Route::post('/api/telegram/verify', function (\Illuminate\Http\Request $request, \App\Services\TelegramService $telegramService) {
+        $initData = $request->input('initData', '');
+        $isValid = $telegramService->verifyWebAppData($initData);
+        return response()->json(['valid' => $isValid]);
+    })->name('api.telegram.verify');
+
     // Admin Auth
     Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login.form');
     Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');

@@ -398,7 +398,13 @@
                      
                      <div>
                          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
-                         <input type="text" name="customer_name" required placeholder="Full Name" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
+                         <template x-if="$store.telegram.isTMA">
+                          <div class="mb-4 p-2.5 rounded-xl bg-glow-500/10 border border-glow-500/30 flex items-center gap-2 text-xs text-glow-300">
+                              <svg class="w-4 h-4 text-glow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.42.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 4-1.74 6.68-2.88 8.04-3.44 3.83-1.58 4.62-1.85 5.14-1.86.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.01.24-.04.38z"/></svg>
+                              <span>Telegram Connected: <strong><span x-text="$store.telegram.user.name"></span></strong> (@<span x-text="$store.telegram.user.username"></span>)</span>
+                          </div>
+                      </template>
+                      <input type="text" name="customer_name" required x-model="customerName" placeholder="Full Name" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
                      </div>
                      
                      <div>
@@ -410,7 +416,7 @@
                          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center justify-between mb-1.5">
                              Telegram Username <span class="text-[9px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded tracking-normal normal-case ml-2 whitespace-nowrap">+ Updates</span>
                          </label>
-                         <input type="text" name="telegram_username" placeholder="@username" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
+                         <input type="text" name="telegram_username" x-model="telegramUsername" placeholder="@username" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
                      </div>
 
                      <div class="pt-4 flex gap-3">
@@ -438,13 +444,13 @@
     </div>
 
     <!-- Floating Action Button for Custom Request -->
-    <button @click="showContactModal = true; document.body.style.overflow = 'hidden';" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full btn-glow flex items-center justify-center text-white shadow-[0_10px_40px_rgba(217,70,239,0.5)] hover:scale-110 transition-transform">
+    <button @click="openContactModal()" class="fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full btn-glow flex items-center justify-center text-white shadow-[0_10px_40px_rgba(217,70,239,0.5)] hover:scale-110 transition-transform" title="Request Custom Item">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
     </button>
 
     <!-- Custom Request Modal -->
     <div x-show="showContactModal" style="display:none;" class="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
-         @open-custom-request.window="showContactModal = true; document.body.style.overflow = 'hidden';">
+         @open-custom-request.window="openContactModal()">
         <div x-show="showContactModal"
              x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
              x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
@@ -473,7 +479,7 @@
                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                          <div>
                              <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Your Name</label>
-                             <input type="text" name="customer_name" required placeholder="Full Name" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
+                             <input type="text" name="customer_name" required x-model="customerName" placeholder="Full Name" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
                          </div>
                          <div>
                              <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
@@ -485,7 +491,7 @@
                          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center justify-between mb-1.5">
                              Telegram Username <span class="text-[9px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded tracking-normal normal-case ml-2 whitespace-nowrap">+ Updates</span>
                          </label>
-                         <input type="text" name="telegram_username" placeholder="@username" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
+                         <input type="text" name="telegram_username" x-model="telegramUsername" placeholder="@username" class="input-field w-full rounded-xl py-2.5 px-4 text-sm bg-black/20">
                      </div>
 
                      <div>
@@ -545,6 +551,8 @@ function shopManager() {
         checkoutProduct: null,
         showContactModal: false,
         selectedProduct: null,
+        customerName: '',
+        telegramUsername: '',
         
         categories: [
             { name: 'All', icon: '✨' },
@@ -592,9 +600,24 @@ function shopManager() {
             document.body.style.overflow = '';
         },
 
+        openContactModal() {
+            if (window.Alpine && Alpine.store('telegram') && Alpine.store('telegram').user) {
+                const tgUser = Alpine.store('telegram').user;
+                if (!this.customerName && tgUser.name) this.customerName = tgUser.name;
+                if (!this.telegramUsername && tgUser.username) this.telegramUsername = tgUser.username;
+            }
+            this.showContactModal = true;
+            document.body.style.overflow = 'hidden';
+        },
+
         openCheckout(mode = 'cart', product = null) {
             this.checkoutMode = mode;
             this.checkoutProduct = product;
+            if (window.Alpine && Alpine.store('telegram') && Alpine.store('telegram').user) {
+                const tgUser = Alpine.store('telegram').user;
+                if (!this.customerName && tgUser.name) this.customerName = tgUser.name;
+                if (!this.telegramUsername && tgUser.username) this.telegramUsername = tgUser.username;
+            }
             this.showCheckoutModal = true;
             document.body.style.overflow = 'hidden';
         },
