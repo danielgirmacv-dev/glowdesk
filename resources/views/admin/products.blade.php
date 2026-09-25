@@ -8,16 +8,16 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <p class="text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
-            <h1 class="text-3xl font-extrabold text-white">Products</h1>
+            <p class="text-purple-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
+            <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Products</h1>
             <p class="text-slate-500 text-sm mt-1">{{ $products->count() }} product{{ $products->count() !== 1 ? 's' : '' }} in store</p>
         </div>
         <div class="flex items-center gap-3 flex-wrap">
-            <button onclick="deleteAllProducts()" class="glass px-5 py-2.5 rounded-xl text-sm font-bold text-red-400 flex items-center gap-2 hover:bg-red-500/10 transition border border-red-500/20">
+            <button onclick="deleteAllProducts()" class="px-5 py-2.5 rounded-xl text-sm font-bold text-red-600 dark:text-red-400 flex items-center gap-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition border border-red-200 dark:border-red-500/20">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 Delete All
             </button>
-            <button onclick="document.getElementById('importModal').style.display='flex'" class="glass px-5 py-2.5 rounded-xl text-sm font-bold text-white flex items-center gap-2 hover:bg-white/10 transition border border-white/10">
+            <button onclick="document.getElementById('importModal').style.display='flex'" class="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-700 dark:text-white flex items-center gap-2 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition border border-slate-200/80 dark:border-white/10 shadow-xs">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                 Import
             </button>
@@ -31,7 +31,7 @@
     <!-- Products Grid -->
     <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         @forelse($products as $product)
-        <div class="glass-dark rounded-2xl overflow-hidden card-hover flex flex-col" data-product-id="{{ $product->id }}" style="border: 1px solid rgba(255,255,255,0.07);">
+        <div class="bg-white dark:bg-[#14141e] rounded-2xl overflow-hidden card-hover flex flex-col border border-purple-100 dark:border-white/8 shadow-[0_2px_12px_rgba(109,40,217,0.08)] dark:shadow-none" data-product-id="{{ $product->id }}">
             <div class="h-36 bg-gradient-to-br from-glow-900/30 to-slate-900 relative overflow-hidden">
                 @if($product->image_url)
                     <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="object-cover w-full h-full opacity-70">
@@ -42,22 +42,22 @@
                 @endif
                 <div class="absolute top-2 right-2">
                     @if($product->is_active)
-                        <span class="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded-full">Active</span>
+                        <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-400/10 border border-emerald-300 dark:border-emerald-400/20 px-2 py-0.5 rounded-full">Active</span>
                     @else
-                        <span class="text-[10px] font-bold text-slate-500 bg-slate-500/10 border border-slate-500/20 px-2 py-0.5 rounded-full">Inactive</span>
+                        <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-500/10 border border-slate-200 dark:border-slate-500/20 px-2 py-0.5 rounded-full">Inactive</span>
                     @endif
                 </div>
             </div>
             <div class="p-4 flex flex-col flex-grow">
-                <h3 class="font-bold text-sm text-white leading-tight">{{ $product->name }}</h3>
-                <p class="text-slate-500 text-xs mt-1 line-clamp-2 flex-grow">{{ $product->description }}</p>
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white leading-tight">{{ $product->name }}</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-xs mt-1 line-clamp-2 flex-grow">{{ $product->description }}</p>
                 <div class="mt-4 flex items-center justify-between">
-                    <span class="text-lg font-extrabold glow-text">Br {{ number_format($product->price, 2) }}</span>
+                    <span class="text-lg font-extrabold text-purple-700 dark:glow-text">Br {{ number_format($product->price, 2) }}</span>
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('admin.products.edit', $product) }}" class="p-2 bg-slate-800/50 hover:bg-glow-500/20 text-slate-400 hover:text-glow-400 rounded-lg transition-all border border-slate-700/50 hover:border-glow-500/30" title="Edit">
+                        <a href="{{ route('admin.products.edit', $product) }}" class="p-2 bg-purple-50 dark:bg-slate-800/50 hover:bg-purple-100 dark:hover:bg-glow-500/20 text-purple-700 dark:text-glow-400 rounded-lg transition-all border border-purple-200 dark:border-slate-700/50" title="Edit">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                         </a>
-                        <button onclick="deleteProduct({{ $product->id }})" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-lg transition-all border border-red-500/20 hover:border-red-500/40" title="Delete">
+                        <button onclick="deleteProduct({{ $product->id }})" class="p-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 rounded-lg transition-all border border-red-200 dark:border-red-500/20" title="Delete">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         </button>
                     </div>
@@ -65,9 +65,9 @@
             </div>
         </div>
         @empty
-        <div class="col-span-full py-20 text-center glass-dark rounded-2xl" style="border: 1px solid rgba(255,255,255,0.07);">
-            <p class="text-slate-400 font-medium">No products yet</p>
-            <p class="text-slate-600 text-sm mt-1">Click "Add Product" to create your first listing.</p>
+        <div class="col-span-full py-20 text-center glass-dark rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm">
+            <p class="text-slate-700 dark:text-slate-400 font-medium">No products yet</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Click "Add Product" to create your first listing.</p>
         </div>
         @endforelse
     </div>
@@ -75,25 +75,25 @@
     {{-- Minimal Text Pagination --}}
     @if($products->hasPages())
     <div class="flex flex-col items-center justify-center mt-10 gap-2">
-        <p class="text-center text-slate-400 text-sm font-semibold">
+        <p class="text-center text-slate-600 dark:text-slate-400 text-sm font-semibold">
             Showing {{ $products->firstItem() }}–{{ $products->lastItem() }} of {{ $products->total() }} products
         </p>
         <div class="flex gap-6 mt-2 text-sm font-bold">
             @if($products->onFirstPage())
-                <span class="text-slate-600 cursor-not-allowed">← Previous</span>
+                <span class="text-slate-400 dark:text-slate-600 cursor-not-allowed">← Previous</span>
             @else
-                <a href="{{ $products->previousPageUrl() }}" class="text-glow-400 hover:text-white transition">← Previous</a>
+                <a href="{{ $products->previousPageUrl() }}" class="text-purple-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">← Previous</a>
             @endif
 
             @if($products->hasMorePages())
-                <a href="{{ $products->nextPageUrl() }}" class="text-glow-400 hover:text-white transition">Next →</a>
+                <a href="{{ $products->nextPageUrl() }}" class="text-purple-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">Next →</a>
             @else
-                <span class="text-slate-600 cursor-not-allowed">Next →</span>
+                <span class="text-slate-400 dark:text-slate-600 cursor-not-allowed">Next →</span>
             @endif
         </div>
     </div>
     @else
-    <p class="text-center text-slate-400 text-sm font-semibold mt-10">
+    <p class="text-center text-slate-600 dark:text-slate-400 text-sm font-semibold mt-10">
         Total: {{ $products->total() }} products
     </p>
     @endif
@@ -102,21 +102,21 @@
 
     <!-- Import Modal -->
     <div id="importModal" style="display:none;" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-        <div class="bg-[#0f172a] rounded-2xl p-6 w-full max-w-md border border-white/10 shadow-2xl relative">
-            <button onclick="document.getElementById('importModal').style.display='none'" class="absolute top-4 right-4 text-white/50 hover:text-white">
+        <div class="bg-white dark:bg-[#0f172a] rounded-2xl p-6 w-full max-w-md border border-slate-200 dark:border-white/10 shadow-2xl relative">
+            <button onclick="document.getElementById('importModal').style.display='none'" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:text-white/50 dark:hover:text-white">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            <h3 class="text-xl font-bold text-white mb-2">Bulk Import Products</h3>
-            <p class="text-slate-400 text-xs mb-6 leading-relaxed">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Bulk Import Products</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-xs mb-6 leading-relaxed">
                 Upload an Excel or CSV file containing your products.<br>
                 First row must be headers: <strong>Name, Description, Price, ImageURL</strong> (optional).
             </p>
             <form action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
-                <div class="glass w-full p-6 rounded-xl border border-white/10 text-center relative cursor-pointer hover:bg-white/5 transition border-dashed">
+                <div class="bg-slate-50 dark:bg-white/5 w-full p-6 rounded-xl border border-slate-300 dark:border-white/10 text-center relative cursor-pointer hover:bg-purple-50/50 dark:hover:bg-white/10 transition border-dashed">
                     <input type="file" name="csv_file" required accept=".csv, .xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                    <svg class="w-8 h-8 text-glow-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                    <p class="text-white text-sm font-semibold">Click or upload file</p>
+                    <svg class="w-8 h-8 text-purple-600 dark:text-glow-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                    <p class="text-slate-900 dark:text-white text-sm font-semibold">Click or upload file</p>
                     <p class="text-slate-500 text-xs mt-1">.csv, .xlsx, .xls</p>
                 </div>
                 <button type="submit" class="w-full btn-glow py-3 rounded-xl text-white font-bold text-sm">

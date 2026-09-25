@@ -109,7 +109,7 @@
             <template x-for="category in categories" :key="category.name">
                 <button @click="activeCategory = category.name"
                         class="flex-shrink-0 px-4 py-2 md:py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 text-sm font-semibold"
-                        :class="activeCategory === category.name ? 'chip-active' : 'bg-white dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-white/10 shadow-xs'">
+                        :class="activeCategory === category.name ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50/60 dark:hover:bg-white/10 shadow-xs'">
                     
                     <span class="text-sm md:text-base leading-none" x-text="category.icon"></span>
                     <span class="text-[11px] md:text-sm whitespace-nowrap" x-text="category.name"></span>
@@ -129,22 +129,22 @@
             <div class="flex items-center gap-1.5 flex-shrink-0">
                 <button @click="sortBy='default'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='default' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'">
+                    :class="sortBy==='default' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
                     Default
                 </button>
                 <button @click="sortBy='price_asc'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='price_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'">
+                    :class="sortBy==='price_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
                     Br Low→High
                 </button>
                 <button @click="sortBy='price_desc'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='price_desc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'">
+                    :class="sortBy==='price_desc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
                     Br High→Low
                 </button>
                 <button @click="sortBy='name_asc'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='name_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'">
+                    :class="sortBy==='name_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
                     A→Z
                 </button>
             </div>
@@ -378,7 +378,7 @@
                      </template>
                      
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
+                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Full Name</label>
                          <template x-if="$store.telegram.isTMA">
                           <div class="mb-4 p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/40 flex items-center gap-2 text-xs text-purple-700 dark:text-purple-300">
                               <svg class="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.42.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 4-1.74 6.68-2.88 8.04-3.44 3.83-1.58 4.62-1.85 5.14-1.86.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.01.24-.04.38z"/></svg>
@@ -389,17 +389,17 @@
                      </div>
                      
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
+                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Phone Number</label>
                          <input type="text" name="phone" required placeholder="+251..." class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
                      </div>
                      
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Delivery Note</label>
+                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Delivery Note</label>
                          <input type="text" name="department" placeholder="" class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
                      </div>
 
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center justify-between mb-1.5">
+                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center justify-between mb-1.5">
                              Telegram Username <span class="text-[9px] text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 px-1.5 py-0.5 rounded tracking-normal normal-case ml-2 whitespace-nowrap">+ Updates</span>
                          </label>
                          <input type="text" name="telegram_username" x-model="telegramUsername" placeholder="@username" class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
@@ -468,24 +468,24 @@
                      
                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                          <div>
-                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Your Name</label>
+                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Your Name</label>
                              <input type="text" name="customer_name" required x-model="customerName" placeholder="Full Name" class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
                          </div>
                          <div>
-                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
+                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Phone Number</label>
                              <input type="text" name="phone" required placeholder="+251..." class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
                          </div>
                      </div>
 
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center justify-between mb-1.5">
+                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center justify-between mb-1.5">
                              Telegram Username <span class="text-[9px] text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 px-1.5 py-0.5 rounded tracking-normal normal-case ml-2 whitespace-nowrap">+ Updates</span>
                          </label>
                          <input type="text" name="telegram_username" x-model="telegramUsername" placeholder="@username" class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
                      </div>
 
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">What are you looking for?</label>
+                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">What are you looking for?</label>
                          <textarea name="request_message" required rows="3" placeholder="Describe the item, brand, or product you need..." class="input-field w-full rounded-xl py-2.5 px-4 text-sm resize-none"></textarea>
                      </div>
 

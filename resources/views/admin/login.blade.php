@@ -23,7 +23,7 @@
         <div class="glass-dark rounded-2xl p-8 border border-slate-200/80 dark:border-white/10 shadow-sm">
 
             @if(isset($errors) && $errors->any())
-                <div class="mb-5 glass border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+                <div class="mb-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2 shadow-xs">
                     <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
                     {{ $errors->first() }}
                 </div>
@@ -32,7 +32,7 @@
             <form action="{{ route('admin.login.submit') }}" method="POST" class="space-y-5">
                 @csrf
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Password</label>
+                    <label class="block text-xs font-bold dark:font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Password</label>
                     <input type="password" name="password" required autofocus placeholder="••••••••"
                         class="input-field w-full rounded-xl py-3 px-4 text-sm">
                 </div>
@@ -44,7 +44,7 @@
             </form>
         </div>
 
-        <p class="text-center text-xs text-slate-600 mt-6">
+        <p class="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
             Access restricted to authorized administrators only
         </p>
     </div>

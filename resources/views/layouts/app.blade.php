@@ -187,16 +187,21 @@
         /* Crisp input fields */
         .input-field {
             background: #ffffff;
-            border: 1px solid #ddd6fe;   /* soft purple border */
+            border: 1.5px solid #d8b4fe;   /* soft purple border */
             color: #0f172a;
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
         .input-field:focus {
             outline: none;
             border-color: #a21caf;
-            box-shadow: 0 0 0 3px rgba(162, 28, 175, 0.12);
+            box-shadow: 0 0 0 3px rgba(162, 28, 175, 0.15);
         }
-        .input-field::placeholder { color: #94a3b8; }
+        .input-field::placeholder { color: #64748b; }
+
+        select.input-field option {
+            background: #ffffff;
+            color: #0f172a;
+        }
 
         /* Subtle scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -204,8 +209,8 @@
         ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 9999px; }
         ::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
 
-        /* Keep white text on gradient elements */
-        button.text-white, a.text-white, .btn-glow, .glow-gradient, .btn-glow *, .glow-gradient * {
+        /* Keep white text on gradient elements ONLY */
+        .btn-glow, .glow-gradient, .btn-glow *, .glow-gradient * {
             color: #ffffff !important;
         }
 
@@ -517,13 +522,13 @@
                     </button>
 
                     @if(request()->is('admin*'))
-                        <a href="{{ route('admin.orders') }}" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">Orders</a>
-                        <a href="{{ route('admin.products') }}" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">Products</a>
-                        <a href="{{ route('admin.products.create') }}" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">+ Add Product</a>
+                        <a href="{{ route('admin.orders') }}" class="px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-all">Orders</a>
+                        <a href="{{ route('admin.products') }}" class="px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-all">Products</a>
+                        <a href="{{ route('admin.products.create') }}" class="px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-all">+ Add Product</a>
                         @if(session('admin_logged_in'))
                             <form action="{{ route('admin.logout') }}" method="POST" class="inline">
                                 @csrf
-                                <button type="submit" class="ml-2 px-3 py-2 text-xs font-semibold text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-all border border-red-500/20">Logout</button>
+                                <button type="submit" class="ml-2 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-400/10 rounded-lg transition-all border border-red-300 dark:border-red-500/20">Logout</button>
                             </form>
                         @endif
                     @endif
@@ -538,15 +543,15 @@
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
                  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
                  x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
-                 class="pointer-events-auto glass border border-emerald-500/30 text-emerald-400 px-4 py-4 rounded-2xl flex items-start gap-4 shadow-2xl" style="background: rgba(16,185,129,0.05); box-shadow: 0 10px 40px rgba(52,211,153,0.15)">
-                <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                 class="pointer-events-auto bg-emerald-50 dark:bg-[#131c17] border border-emerald-300 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-300 px-4 py-4 rounded-2xl flex items-start gap-4 shadow-xl">
+                <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 </div>
                 <div class="flex-1">
-                    <h4 class="text-sm font-bold text-white mb-0.5">Success!</h4>
-                    <p class="text-xs text-emerald-400/80 leading-relaxed">{{ session('success') }}</p>
+                    <h4 class="text-sm font-bold text-emerald-900 dark:text-white mb-0.5">Success!</h4>
+                    <p class="text-xs text-emerald-800 dark:text-emerald-300 leading-relaxed">{{ session('success') }}</p>
                 </div>
-                <button @click="show = false" class="text-emerald-400/50 hover:text-white transition flex-shrink-0">
+                <button @click="show = false" class="text-emerald-600 dark:text-emerald-400/50 hover:text-emerald-900 dark:hover:text-white transition flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -555,15 +560,15 @@
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 7000)" x-show="show"
                  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
                  x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
-                 class="pointer-events-auto glass border border-red-500/30 text-red-400 px-4 py-4 rounded-2xl flex items-start gap-4 shadow-2xl" style="background: rgba(239,68,68,0.05); box-shadow: 0 10px 40px rgba(239,68,68,0.15)">
-                <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                 class="pointer-events-auto bg-red-50 dark:bg-[#1c1313] border border-red-300 dark:border-red-500/40 text-red-900 dark:text-red-300 px-4 py-4 rounded-2xl flex items-start gap-4 shadow-xl">
+                <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 <div class="flex-1">
-                    <h4 class="text-sm font-bold mb-1">Notice</h4>
-                    <p class="text-xs opacity-90 leading-relaxed">{{ session('error') }}</p>
+                    <h4 class="text-sm font-bold text-red-900 dark:text-white mb-1">Notice</h4>
+                    <p class="text-xs text-red-800 dark:text-red-300 leading-relaxed">{{ session('error') }}</p>
                 </div>
-                <button @click="show = false" class="text-red-400/50 hover:text-red-400 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                <button @click="show = false" class="text-red-600 dark:text-red-400/50 hover:text-red-900 dark:hover:text-red-300 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
         @endif
 
@@ -571,19 +576,19 @@
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 8000)" x-show="show"
                  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
                  x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
-                 class="pointer-events-auto glass border border-red-500/30 text-red-400 px-4 py-4 rounded-2xl flex items-start gap-4 shadow-2xl" style="background: rgba(239,68,68,0.05); box-shadow: 0 10px 40px rgba(239,68,68,0.15)">
-                <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                 class="pointer-events-auto bg-red-50 dark:bg-[#1c1313] border border-red-300 dark:border-red-500/40 text-red-900 dark:text-red-300 px-4 py-4 rounded-2xl flex items-start gap-4 shadow-xl">
+                <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                 </div>
                 <div class="flex-1">
-                    <h4 class="text-sm font-bold mb-1">Please check your inputs</h4>
-                    <ul class="text-xs opacity-90 leading-relaxed list-disc list-inside">
+                    <h4 class="text-sm font-bold text-red-900 dark:text-white mb-1">Please check your inputs</h4>
+                    <ul class="text-xs text-red-800 dark:text-red-300 leading-relaxed list-disc list-inside">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
-                <button @click="show = false" class="text-red-400/50 hover:text-red-400 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                <button @click="show = false" class="text-red-600 dark:text-red-400/50 hover:text-red-900 dark:hover:text-red-300 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
         @endif
     </div>

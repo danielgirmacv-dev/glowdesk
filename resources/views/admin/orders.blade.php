@@ -8,20 +8,20 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <p class="text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
-            <h1 class="text-3xl font-extrabold text-white">Orders</h1>
+            <p class="text-purple-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
+            <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Orders</h1>
             <p class="text-slate-500 text-sm mt-1">{{ $orders->count() }} total order{{ $orders->count() !== 1 ? 's' : '' }}</p>
         </div>
         <div class="flex items-center gap-3">
             <!-- Status filter pills -->
             <div class="flex items-center gap-2 text-xs font-semibold">
-                <span class="px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                <span class="px-3 py-1.5 rounded-full bg-amber-100 dark:bg-yellow-500/10 text-amber-800 dark:text-yellow-400 border border-amber-300 dark:border-yellow-500/20">
                     {{ $orders->where('status','pending')->count() }} Pending
                 </span>
-                <span class="px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                <span class="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-500/10 text-blue-800 dark:text-blue-400 border border-blue-300 dark:border-blue-500/20">
                     {{ $orders->where('status','processing')->count() }} Processing
                 </span>
-                <span class="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span class="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/20">
                     {{ $orders->where('status','delivered')->count() }} Delivered
                 </span>
             </div>
@@ -44,28 +44,28 @@
 
     <!-- Orders Table -->
     @if($orders->count() > 0)
-    <div class="glass-dark rounded-2xl overflow-hidden" style="border: 1px solid rgba(255,255,255,0.07);">
+    <div class="glass-dark rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-sm">
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
-                    <tr class="border-b border-white/5">
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Order</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Customer</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Product</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Qty</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Department</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                    <tr class="border-b border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-transparent">
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Order</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Customer</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Product</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Qty</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Department</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-white/5">
+                <tbody class="divide-y divide-slate-200/80 dark:divide-white/5">
                     @foreach($orders as $order)
-                    <tr class="hover:bg-white/[0.02] transition-colors group" id="order-row-{{ $order->id }}">
+                    <tr class="hover:bg-purple-50/40 dark:hover:bg-white/[0.02] transition-colors group" id="order-row-{{ $order->id }}">
 
                         <!-- Order ID & Time -->
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <p class="text-glow-400 text-xs font-bold font-mono">#GD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</p>
-                            <p class="text-slate-600 text-xs mt-0.5">{{ $order->created_at->diffForHumans() }}</p>
+                            <p class="text-purple-700 dark:text-glow-400 text-xs font-bold font-mono">#GD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</p>
+                            <p class="text-slate-500 text-xs mt-0.5">{{ $order->created_at->diffForHumans() }}</p>
                         </td>
 
                         <!-- Customer -->
@@ -75,7 +75,7 @@
                                     {{ strtoupper(substr($order->customer_name, 0, 1)) }}
                                 </div>
                                 <div>
-                                    <p class="text-white font-medium">{{ $order->customer_name }}</p>
+                                    <p class="text-slate-900 dark:text-white font-medium">{{ $order->customer_name }}</p>
                                     <p class="text-slate-500 text-xs">{{ $order->phone }}</p>
                                 </div>
                             </div>
@@ -84,20 +84,20 @@
                         <!-- Products -->
                         <td class="px-6 py-4">
                             @foreach($order->items as $item)
-                            <p class="text-slate-300 text-xs">{{ $item->product->name ?? '—' }}</p>
+                            <p class="text-slate-700 dark:text-slate-300 text-xs font-medium">{{ $item->product->name ?? '—' }}</p>
                             @endforeach
                         </td>
 
                         <!-- Quantity -->
                         <td class="px-6 py-4">
                             @foreach($order->items as $item)
-                            <p class="text-white font-semibold text-center w-8 h-8 rounded-lg glass flex items-center justify-center">{{ $item->quantity }}</p>
+                            <p class="text-slate-900 dark:text-white font-semibold text-center w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex items-center justify-center">{{ $item->quantity }}</p>
                             @endforeach
                         </td>
 
                         <!-- Department -->
                         <td class="px-6 py-4">
-                            <span class="text-slate-400 text-xs">{{ $order->department }}</span>
+                            <span class="text-slate-600 dark:text-slate-400 text-xs">{{ $order->department }}</span>
                         </td>
 
                         <!-- Status Dropdown (AJAX) -->
@@ -120,7 +120,7 @@
                                 <button
                                     @click="openModal({{ $order->toJson() }})"
                                     title="View Details"
-                                    class="w-8 h-8 rounded-lg glass hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all">
+                                    class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 </button>
 
@@ -128,14 +128,14 @@
                                 <button
                                     onclick="updateStatus({{ $order->id }}, 'delivered', null)"
                                     title="Mark as Delivered"
-                                    class="w-8 h-8 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 flex items-center justify-center text-emerald-400 hover:text-emerald-300 transition-all">
+                                    class="w-8 h-8 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                                 </button>
 
                                 <!-- Call -->
                                 <a href="tel:{{ $order->phone }}"
                                    title="Call Customer"
-                                   class="w-8 h-8 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 flex items-center justify-center text-blue-400 hover:text-blue-300 transition-all">
+                                   class="w-8 h-8 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                                 </a>
 
@@ -151,7 +151,7 @@
                                 <a href="https://wa.me/{{ $cleanPhone }}"
                                    target="_blank"
                                    title="WhatsApp"
-                                   class="w-8 h-8 rounded-lg bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 flex items-center justify-center text-green-400 hover:text-green-300 transition-all">
+                                   class="w-8 h-8 rounded-lg bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                                 </a>
 
@@ -159,7 +159,7 @@
                                 <a href="https://t.me/+{{ $cleanPhone }}"
                                    target="_blank"
                                    title="Telegram"
-                                   class="w-8 h-8 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/20 flex items-center justify-center text-sky-400 hover:text-sky-300 transition-all">
+                                   class="w-8 h-8 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/20 flex items-center justify-center text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                                 </a>
 
@@ -167,7 +167,7 @@
                                 <button
                                     onclick="deleteOrder({{ $order->id }})"
                                     title="Delete Order"
-                                    class="w-8 h-8 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 flex items-center justify-center text-red-400 hover:text-red-300 transition-all">
+                                    class="w-8 h-8 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 </button>
                             </div>
@@ -177,14 +177,13 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    @else
-    <div class="py-24 text-center glass-dark rounded-2xl" style="border: 1px solid rgba(255,255,255,0.07);">
-        <div class="w-16 h-16 mx-auto rounded-2xl glass flex items-center justify-center mb-4">
-            <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      @else
+    <div class="py-24 text-center glass-dark rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
         </div>
-        <p class="text-slate-400 font-medium">No orders yet</p>
-        <p class="text-slate-600 text-sm mt-1">Orders will appear here once customers place them.</p>
+        <p class="text-slate-700 dark:text-slate-400 font-medium">No orders yet</p>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Orders will appear here once customers place them.</p>
     </div>
     @endif
 
@@ -199,46 +198,45 @@
         <div x-show="modal.show"
              x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
              x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-             class="relative w-full max-w-md glass-dark rounded-2xl overflow-hidden shadow-2xl"
-             style="border: 1px solid rgba(217,70,239,0.2); box-shadow: 0 25px 80px rgba(217,70,239,0.15);">
+             class="relative w-full max-w-md bg-white dark:bg-[#13131c] rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 dark:border-white/10">
 
             <div class="glow-gradient p-5 flex items-center justify-between">
                 <div>
-                    <p class="text-white/60 text-xs font-mono" x-text="'Order #GD-' + String(modal.order?.id ?? '').padStart(4, '0')"></p>
-                    <h3 class="font-bold text-white">Order Details</h3>
+                    <p class="text-white/80 text-xs font-mono" x-text="'Order #GD-' + String(modal.order?.id ?? '').padStart(4, '0')"></p>
+                    <h3 class="font-bold text-white text-lg">Order Details</h3>
                 </div>
-                <button @click="modal.show = false" class="text-white/60 hover:text-white transition">
+                <button @click="modal.show = false" class="text-white/80 hover:text-white transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
             <div class="p-6 space-y-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="glass rounded-xl p-4" style="border: 1px solid rgba(255,255,255,0.06);">
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Customer</p>
-                        <p class="text-white font-semibold text-sm" x-text="modal.order?.customer_name"></p>
+                    <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Customer</p>
+                        <p class="text-slate-900 dark:text-white font-semibold text-sm" x-text="modal.order?.customer_name"></p>
                     </div>
-                    <div class="glass rounded-xl p-4" style="border: 1px solid rgba(255,255,255,0.06);">
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Department</p>
-                        <p class="text-white font-semibold text-sm" x-text="modal.order?.department"></p>
+                    <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Department</p>
+                        <p class="text-slate-900 dark:text-white font-semibold text-sm" x-text="modal.order?.department || '—'"></p>
                     </div>
-                    <div class="glass rounded-xl p-4" style="border: 1px solid rgba(255,255,255,0.06);">
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Phone</p>
-                        <p class="text-glow-400 font-semibold text-sm" x-text="modal.order?.phone"></p>
+                    <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Phone</p>
+                        <p class="text-purple-700 dark:text-glow-400 font-semibold text-sm" x-text="modal.order?.phone"></p>
                     </div>
-                    <div class="glass rounded-xl p-4" style="border: 1px solid rgba(255,255,255,0.06);">
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Total</p>
-                        <p class="text-glow-400 font-bold text-sm" x-text="'Br ' + parseFloat(modal.order?.total_amount ?? 0).toFixed(2)"></p>
+                    <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Total</p>
+                        <p class="text-purple-700 dark:text-glow-400 font-bold text-sm" x-text="'Br ' + parseFloat(modal.order?.total_amount ?? 0).toFixed(2)"></p>
                     </div>
                 </div>
 
-                <div class="glass rounded-xl p-4" style="border: 1px solid rgba(255,255,255,0.06);">
-                    <p class="text-slate-500 text-xs uppercase tracking-wider mb-2">Status</p>
+                <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
+                    <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-2">Status</p>
                     <span class="text-xs font-bold px-3 py-1 rounded-full"
                           :class="{
-                            'bg-yellow-500/15 text-yellow-400 border border-yellow-500/20': modal.order?.status === 'pending',
-                            'bg-blue-500/15 text-blue-400 border border-blue-500/20': modal.order?.status === 'processing',
-                            'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20': modal.order?.status === 'delivered',
+                            'bg-amber-100 text-amber-800 border border-amber-300 dark:bg-yellow-500/15 dark:text-yellow-400 dark:border-yellow-500/20': modal.order?.status === 'pending',
+                            'bg-blue-100 text-blue-800 border border-blue-300 dark:bg-blue-500/15 dark:text-blue-400 dark:border-blue-500/20': modal.order?.status === 'processing',
+                            'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/20': modal.order?.status === 'delivered',
                           }"
                           x-text="modal.order?.status ? (modal.order.status.charAt(0).toUpperCase() + modal.order.status.slice(1)) : ''">
                     </span>
@@ -247,21 +245,19 @@
                 <!-- Action buttons in modal -->
                 <div class="flex gap-3 pt-2">
                     <a :href="'tel:' + modal.order?.phone"
-                       class="flex-1 glass text-blue-400 hover:text-blue-300 text-sm font-semibold py-2.5 rounded-xl text-center transition-all border border-blue-500/20 hover:border-blue-500/40 flex items-center justify-center gap-2">
+                       class="flex-1 bg-slate-50 dark:bg-white/5 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-semibold py-2.5 rounded-xl text-center transition-all border border-blue-300/60 dark:border-blue-500/20 flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                         Call
                     </a>
                     <a :href="'https://wa.me/' + formatPhone(modal.order?.phone)"
                        target="_blank"
-                       class="flex-1 glass text-green-400 hover:text-green-300 text-sm font-semibold py-2.5 rounded-xl text-center transition-all border border-green-500/20 hover:border-green-500/40 flex items-center justify-center gap-2">
+                       class="flex-1 bg-slate-50 dark:bg-white/5 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 text-sm font-semibold py-2.5 rounded-xl text-center transition-all border border-green-300/60 dark:border-green-500/20 flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         WhatsApp
                     </a>
-
-                    <!-- Telegram button in modal -->
                     <a :href="'https://t.me/+' + formatPhone(modal.order?.phone)"
                        target="_blank"
-                       class="flex-1 glass text-sky-400 hover:text-sky-300 text-sm font-semibold py-2.5 rounded-xl text-center transition-all border border-sky-500/20 hover:border-sky-500/40 flex items-center justify-center gap-2">
+                       class="flex-1 bg-slate-50 dark:bg-white/5 text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 text-sm font-semibold py-2.5 rounded-xl text-center transition-all border border-sky-300/60 dark:border-sky-500/20 flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                         Telegram
                     </a>
@@ -273,10 +269,17 @@
 
 {{-- Status badge colors applied via JS --}}
 <style>
-    .status-select[data-status="pending"]    { color: #facc15; border-color: rgba(234,179,8,0.3); background-color: rgba(234,179,8,0.08); }
-    .status-select[data-status="processing"] { color: #60a5fa; border-color: rgba(96,165,250,0.3); background-color: rgba(96,165,250,0.08); }
-    .status-select[data-status="delivered"]  { color: #34d399; border-color: rgba(52,211,153,0.3); background-color: rgba(52,211,153,0.08); }
-    .status-select option { background: #0f172a; color: #e2e8f0; }
+    /* Light mode status badge colors */
+    .status-select[data-status="pending"]    { color: #b45309; border-color: #fcd34d; background-color: #fef3c7; }
+    .status-select[data-status="processing"] { color: #1d4ed8; border-color: #93c5fd; background-color: #eff6ff; }
+    .status-select[data-status="delivered"]  { color: #047857; border-color: #6ee7b7; background-color: #ecfdf5; }
+    .status-select option { background: #ffffff; color: #0f172a; }
+
+    /* Dark mode status badge colors */
+    html.dark .status-select[data-status="pending"]    { color: #facc15; border-color: rgba(234,179,8,0.3); background-color: rgba(234,179,8,0.08); }
+    html.dark .status-select[data-status="processing"] { color: #60a5fa; border-color: rgba(96,165,250,0.3); background-color: rgba(96,165,250,0.08); }
+    html.dark .status-select[data-status="delivered"]  { color: #34d399; border-color: rgba(52,211,153,0.3); background-color: rgba(52,211,153,0.08); }
+    html.dark .status-select option { background: #13131c; color: #f1f5f9; }
 </style>
 
 <script>
