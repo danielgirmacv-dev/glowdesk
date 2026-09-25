@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +11,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Early Theme Init Script (Zero FOUC) -->
+    <!-- Early Theme Init Script (Zero FOUC - Night Mode Default) -->
     <script>
         (function() {
-            var saved = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowdesk_theme') || localStorage.getItem('theme');
-            var theme = saved || 'dark';
+            // Default is strictly Dark/Night Mode unless explicitly toggled to light
+            if (!localStorage.getItem('glowaddis_theme_v2')) {
+                localStorage.setItem('glowaddis_theme_v2', 'dark');
+                localStorage.setItem('glowaddis_theme', 'dark');
+                localStorage.setItem('glowdesk_theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            var saved = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowaddis_theme_v2');
+            var theme = saved === 'light' ? 'light' : 'dark';
             if (theme === 'light') {
                 document.documentElement.classList.add('light-mode');
                 document.documentElement.classList.remove('dark');
@@ -45,6 +52,7 @@
                 }
             }
             
+            localStorage.setItem('glowaddis_theme_v2', nextTheme);
             localStorage.setItem('glowaddis_theme', nextTheme);
             localStorage.setItem('glowdesk_theme', nextTheme);
             localStorage.setItem('theme', nextTheme);
@@ -708,23 +716,26 @@
         document.addEventListener('alpine:init', () => {
             Alpine.store('theme', {
                 current: (function() {
-                    return localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowdesk_theme') || localStorage.getItem('theme') || 'dark';
+                    var saved = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowaddis_theme_v2');
+                    return saved === 'light' ? 'light' : 'dark';
                 })(),
                 init() {
                     this.apply();
                 },
                 toggle() {
                     this.current = this.current === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem('glowaddis_theme_v2', this.current);
                     localStorage.setItem('glowaddis_theme', this.current);
                     localStorage.setItem('glowdesk_theme', this.current);
                     localStorage.setItem('theme', this.current);
                     this.apply();
                 },
                 set(val) {
-                    this.current = val;
-                    localStorage.setItem('glowaddis_theme', val);
-                    localStorage.setItem('glowdesk_theme', val);
-                    localStorage.setItem('theme', val);
+                    this.current = val === 'light' ? 'light' : 'dark';
+                    localStorage.setItem('glowaddis_theme_v2', this.current);
+                    localStorage.setItem('glowaddis_theme', this.current);
+                    localStorage.setItem('glowdesk_theme', this.current);
+                    localStorage.setItem('theme', this.current);
                     this.apply();
                 },
                 apply() {
@@ -881,10 +892,13 @@
                             };
                             console.log('✨ Telegram WebApp User Loaded:', this.user);
 
-                            // Only sync theme with Telegram if inside TMA AND user has not set a local preference
-                            const hasManualTheme = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowdesk_theme') || localStorage.getItem('theme');
-                            if (!hasManualTheme && tg.colorScheme) {
-                                Alpine.store('theme').set(tg.colorScheme);
+                            // Ensure header and background colors match default dark mode in TMA
+                            if (tg.setHeaderColor) {
+                                try {
+                                    const isLight = Alpine.store('theme').current === 'light';
+                                    tg.setHeaderColor(isLight ? '#faf8fc' : '#0d0d12');
+                                    tg.setBackgroundColor(isLight ? '#faf8fc' : '#0d0d12');
+                                } catch(e) {}
                             }
                         }
                     }
