@@ -95,7 +95,7 @@
 
         <!-- Brand Hero Text -->
         <div class="text-center mb-10">
-            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-3">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-3 text-slate-900 dark:text-white">
                 <span class="glow-text">GlowAddis</span><br>
                 <span class="text-slate-900 dark:text-white text-3xl sm:text-5xl font-semibold">Beauty delivered to your desk</span>
             </h1>
@@ -149,7 +149,7 @@
                 </button>
             </div>
 
-            <span class="text-slate-500 text-xs whitespace-nowrap px-2">
+            <span class="text-slate-500 dark:text-slate-400 text-xs whitespace-nowrap px-2">
                 <span x-text="filteredProducts.length"></span> items
             </span>
         </div>
@@ -219,7 +219,7 @@
             </template>
 
             <div x-show="filteredProducts.length === 0" class="col-span-full py-20 text-center">
-                <p class="text-slate-500 text-sm">No products match your search.</p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">No products match your search.</p>
                 <button @click="search=''" class="mt-2 text-purple-600 dark:text-purple-400 text-xs font-semibold hover:underline">Clear search</button>
             </div>
         </div>

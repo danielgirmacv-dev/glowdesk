@@ -122,6 +122,15 @@
             color: #f1f5f9 !important;
         }
 
+        /* Global dark mode text fallback — catches any element that inherits color from body */
+        html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+            color: #f1f5f9;
+        }
+        html.dark p:not([class*="text-"]), html.dark span:not([class*="text-"]), html.dark label:not([class*="text-"]) {
+            color: inherit;
+        }
+
+
         /* Clean, controlled gradients (no neon color spill) */
         .glow-gradient {
             background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
