@@ -24,13 +24,48 @@
                 document.documentElement.classList.add('dark');
             }
         })();
+
+        window.toggleGlowTheme = function() {
+            var isCurrentlyDark = document.documentElement.classList.contains('dark');
+            var nextTheme = isCurrentlyDark ? 'light' : 'dark';
+            
+            if (nextTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light-mode');
+                if (document.body) {
+                    document.body.classList.remove('dark');
+                    document.body.classList.add('light-mode');
+                }
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light-mode');
+                if (document.body) {
+                    document.body.classList.add('dark');
+                    document.body.classList.remove('light-mode');
+                }
+            }
+            
+            localStorage.setItem('glowaddis_theme', nextTheme);
+            localStorage.setItem('glowdesk_theme', nextTheme);
+            localStorage.setItem('theme', nextTheme);
+
+            if (window.Alpine && window.Alpine.store && window.Alpine.store('theme')) {
+                window.Alpine.store('theme').current = nextTheme;
+            }
+
+            if (window.Telegram && window.Telegram.WebApp) {
+                try {
+                    window.Telegram.WebApp.setHeaderColor(nextTheme === 'light' ? '#faf8fc' : '#0d0d12');
+                    window.Telegram.WebApp.setBackgroundColor(nextTheme === 'light' ? '#faf8fc' : '#0d0d12');
+                } catch(e) {}
+            }
+        };
     </script>
     
-    <!-- Telegram WebApp SDK -->
-    <script defer src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind Configuration (MUST be before Tailwind script for CDN) -->
     <script>
-        tailwind.config = {
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
@@ -54,8 +89,11 @@
                     },
                 }
             }
-        }
+        };
     </script>
+    <!-- Telegram WebApp SDK -->
+    <script defer src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
@@ -240,6 +278,19 @@
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
         }
+        html.dark .card-hover,
+        .dark .card-hover {
+            background: #14141e !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark .card-hover h3,
+        .dark .card-hover h3 {
+            color: #ffffff !important;
+        }
+        html.dark .card-hover p,
+        .dark .card-hover p {
+            color: #94a3b8 !important;
+        }
         html.dark .card-hover:hover {
             box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(124, 58, 237, 0.15) !important;
         }
@@ -357,7 +408,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased transition-colors duration-200">
+<body class="min-h-screen flex flex-col antialiased transition-colors duration-200" x-data>
 
     <!-- Navbar -->
     <nav class="glass-dark sticky top-0 z-50 border-b border-black/5 dark:border-white/8">
@@ -437,12 +488,17 @@
                     </div>
 
                     <!-- Theme Toggle Pill -->
-                    <button @click="$store.theme.toggle()" type="button"
-                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/15 transition-all mr-2 text-xs font-semibold"
+                    <button @click="$store.theme.toggle()" onclick="window.toggleGlowTheme()" type="button"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-200/80 dark:bg-white/10 border border-slate-300/80 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-300/80 dark:hover:bg-white/15 transition-all mr-2 text-xs font-semibold shadow-xs cursor-pointer select-none"
                         :title="$store.theme.current === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-                        <svg x-cloak x-show="$store.theme.current === 'dark'" class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                        <svg x-cloak x-show="$store.theme.current === 'light'" class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-                        <span class="hidden sm:inline" x-text="$store.theme.current === 'dark' ? 'Light' : 'Dark'"></span>
+                        <span class="inline-flex items-center" x-show="$store.theme.current === 'dark'">
+                            <svg class="w-3.5 h-3.5 text-amber-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                            <span class="hidden sm:inline">Light</span>
+                        </span>
+                        <span class="inline-flex items-center" x-show="$store.theme.current !== 'dark'">
+                            <svg class="w-3.5 h-3.5 text-indigo-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                            <span class="hidden sm:inline">Dark</span>
+                        </span>
                     </button>
 
                     @if(request()->is('admin*'))

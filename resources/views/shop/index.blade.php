@@ -183,7 +183,7 @@
                     </div>
                     <div class="p-3.5 flex flex-col flex-grow">
                         <h3 class="font-semibold text-sm text-slate-900 dark:text-white leading-tight mb-1 line-clamp-2" x-text="product.name"></h3>
-                        <p class="text-slate-500 text-[11px] leading-relaxed flex-grow line-clamp-2 mb-3 font-normal" x-text="product.description"></p>
+                        <p class="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed flex-grow line-clamp-2 mb-3 font-normal" x-text="product.description"></p>
                         <template x-if="product.is_active">
                             <div class="flex gap-1.5">
                                 <button @click="$store.cart.add(product)" title="Add to Cart"
