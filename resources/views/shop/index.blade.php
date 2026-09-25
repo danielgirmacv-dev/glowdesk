@@ -256,7 +256,7 @@
         <div x-show="showModal"
              x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-6" x-transition:enter-end="opacity-100 scale-100 translate-y-0"
              x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-6"
-             class="relative w-full max-w-sm sm:max-w-md glass-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] border border-slate-200/80 dark:border-white/10">
+             class="relative w-full max-w-sm sm:max-w-md bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] border border-slate-200/80 dark:border-white/10">
              
              <!-- Close Button -->
              <button @click="closeModal()" class="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all z-[201] border border-slate-200/60 dark:border-white/10">
@@ -290,9 +290,9 @@
                     </div>
                 </div>
 
-                <div class="rounded-2xl p-4 border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-white/5 flex-grow mb-5">
-                    <h4 class="text-[10px] font-bold text-slate-400 dark:text-slate-400 uppercase tracking-wider mb-2">Description</h4>
-                    <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-normal" x-text="selectedProduct?.description || 'No description available for this product.'"></p>
+                <div class="rounded-2xl p-4 border border-slate-200/80 dark:border-white/10 bg-slate-50 dark:bg-white/5 flex-grow mb-5">
+                    <h4 class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Description</h4>
+                    <p class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-normal" x-text="selectedProduct?.description || 'No description available for this product.'"></p>
                 </div>
 
                 <div class="flex gap-2.5">
@@ -300,7 +300,7 @@
                         <div class="flex-1">
                              <button @click="$store.cart.add(selectedProduct)"
                                  class="w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-xs uppercase tracking-wider"
-                                 :class="$store.cart.items.some(i => i.id === selectedProduct.id) ? 'bg-emerald-500/15 border-2 border-emerald-500/50 text-emerald-700 dark:text-emerald-400' : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 border-2 border-slate-900 dark:border-white shadow-xs'">
+                                 :class="$store.cart.items.some(i => i.id === selectedProduct.id) ? 'bg-emerald-500/15 border-2 border-emerald-500/50 text-emerald-700 dark:text-emerald-400' : 'bg-slate-900 dark:bg-white/10 hover:bg-slate-800 dark:hover:bg-white/15 text-white border-2 border-slate-900 dark:border-white/20 shadow-xs'">
                                  
                                  <template x-if="$store.cart.items.some(i => i.id === selectedProduct.id)">
                                      <span class="flex items-center gap-1.5">
@@ -320,7 +320,7 @@
                     </template>
                     <template x-if="selectedProduct?.is_active">
                         <button @click="closeModal(); openCheckout('single', selectedProduct)"
-                                class="flex-[1.2] bg-gradient-to-r from-purple-600 to-indigo-600 hover:brightness-105 text-white text-xs font-bold py-3 rounded-xl flex items-center justify-center uppercase tracking-wider transition-all shadow-xs active:scale-95">
+                                class="flex-[1.2] btn-glow text-white text-xs font-bold py-3 rounded-xl flex items-center justify-center uppercase tracking-wider transition-all shadow-xs active:scale-95">
                             Order Now
                         </button>
                     </template>
@@ -342,7 +342,7 @@
         <div x-show="showCheckoutModal"
              x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0"
              x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative w-full max-w-lg glass-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col z-10 border border-slate-200/80 dark:border-white/10">
+             class="relative w-full max-w-lg bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl overflow-hidden shadow-2xl flex flex-col z-10 border border-slate-200/80 dark:border-white/10">
              
              <div class="p-6 md:p-8 relative">
                  <button type="button" @click="showCheckoutModal = false" class="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:hover:text-white transition border border-slate-200/60 dark:border-white/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -393,8 +393,8 @@
                      </div>
                      
                      <div>
-                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Department / Delivery Note</label>
-                         <input type="text" name="department" placeholder="Finance, Floor 3, Reception..." class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
+                         <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Delivery Note</label>
+                         <input type="text" name="department" placeholder="" class="input-field w-full rounded-xl py-2.5 px-4 text-sm">
                      </div>
 
                      <div>
@@ -449,7 +449,7 @@
         <div x-show="showContactModal"
              x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0"
              x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative w-full max-w-lg glass-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-200/80 dark:border-white/10">
+             class="relative w-full max-w-lg bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-200/80 dark:border-white/10">
              
              <div class="p-6 md:p-8 relative">
                  <button @click="showContactModal = false; document.body.style.overflow = '';" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:hover:text-white transition bg-slate-100 dark:bg-white/10 rounded-full p-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>

@@ -98,10 +98,12 @@
     <style>
         [x-cloak] { display: none !important; }
 
-        /* Clean base colors & fonts */
+        /* ─── Base Theme ─────────────────────────────────────────── */
         html {
             background-color: #faf8fc;
             color-scheme: light;
+            transition: background-color 0.2s ease;
+            min-height: 100%;
         }
         html.dark {
             background-color: #0d0d12;
@@ -109,10 +111,15 @@
         }
 
         body {
-            background-color: #faf8fc;
+            background-color: inherit;  /* inherits from html — single source of truth */
             color: #0f172a;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        html.dark body {
+            color: #f1f5f9 !important;
         }
 
         /* Clean, controlled gradients (no neon color spill) */
@@ -255,10 +262,7 @@
         /* ========================================================
            DARK MODE: Sleek, Crisp, Apple-Style (NO NEON GLOW)
            ======================================================== */
-        html.dark body, body.dark {
-            background-color: #0d0d12 !important;
-            color: #f1f5f9 !important;
-        }
+
         html.dark ::-webkit-scrollbar-thumb {
             background: #334155;
         }
@@ -488,7 +492,7 @@
                     </div>
 
                     <!-- Theme Toggle Pill -->
-                    <button @click="$store.theme.toggle()" onclick="window.toggleGlowTheme()" type="button"
+                    <button @click="$store.theme.toggle()" type="button"
                         class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-200/80 dark:bg-white/10 border border-slate-300/80 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-300/80 dark:hover:bg-white/15 transition-all mr-2 text-xs font-semibold shadow-xs cursor-pointer select-none"
                         :title="$store.theme.current === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
                         <span class="inline-flex items-center" x-show="$store.theme.current === 'dark'">
