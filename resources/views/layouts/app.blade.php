@@ -100,7 +100,7 @@
 
         /* ─── Base Theme ─────────────────────────────────────────── */
         html {
-            background-color: #faf8fc;
+            background-color: #f3f0f8;   /* warm lavender page bg — NOT plain white */
             color-scheme: light;
             transition: background-color 0.2s ease;
             min-height: 100%;
@@ -111,7 +111,7 @@
         }
 
         body {
-            background-color: inherit;  /* inherits from html — single source of truth */
+            background-color: inherit;
             color: #0f172a;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -122,7 +122,7 @@
             color: #f1f5f9 !important;
         }
 
-        /* Global dark mode text fallback — catches any element that inherits color from body */
+        /* Global dark mode text fallback */
         html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
             color: #f1f5f9;
         }
@@ -131,7 +131,7 @@
         }
 
 
-        /* Clean, controlled gradients (no neon color spill) */
+        /* Clean, controlled gradients */
         .glow-gradient {
             background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
         }
@@ -142,30 +142,30 @@
             background-clip: text;
         }
 
-        /* Glass styles - sharp, crisp, subtle depth */
+        /* Glass styles — visible depth in light mode */
         .glass {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.07);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-        }
-        .glass-dark {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+            box-shadow: 0 2px 8px rgba(109, 40, 217, 0.06);
+        }
+        .glass-dark {
+            background: #ffffff;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.09);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
 
-        /* Modern card hover — premium lift + shadow bloom */
+        /* Modern card hover */
         .card-hover {
             transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .card-hover:hover {
             transform: translateY(-5px) scale(1.015);
-            box-shadow: 0 22px 44px -8px rgba(0, 0, 0, 0.13);
+            box-shadow: 0 22px 44px -8px rgba(109, 40, 217, 0.15);
         }
 
-        /* Premium gradient button with background-position shimmer */
+        /* Premium gradient button */
         .btn-glow {
             background: linear-gradient(135deg, #c026d3 0%, #7c3aed 55%, #a21caf 100%);
             background-size: 200% 200%;
@@ -184,10 +184,10 @@
             box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
         }
 
-        /* Crisp clean input fields */
+        /* Crisp input fields */
         .input-field {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #ddd6fe;   /* soft purple border */
             color: #0f172a;
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
@@ -201,21 +201,22 @@
         /* Subtle scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
 
-        /* Ensure clean white text on gradient elements */
+        /* Keep white text on gradient elements */
         button.text-white, a.text-white, .btn-glow, .glow-gradient, .btn-glow *, .glow-gradient * {
             color: #ffffff !important;
         }
 
-        /* Light Mode navbar & dropdowns */
+        /* ─── Light Mode Navbar ──────────────────────────────────── */
         nav.glass-dark {
-            background: rgba(255, 255, 255, 0.88);
+            background: #ffffff;
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid #ede9fe;  /* visible lavender border */
+            box-shadow: 0 2px 12px rgba(109, 40, 217, 0.07);
         }
+
         nav.glass-dark .text-slate-400 { color: #64748b; }
         nav.glass-dark .text-slate-400:hover { color: #0f172a; }
         nav.glass-dark .text-white { color: #0f172a; }
@@ -397,19 +398,20 @@
             border-color: transparent !important;
         }
 
-        /* Search + sort container — better glass */
+        /* Search + sort container */
         .sort-glass {
-            background: rgba(255, 255, 255, 0.92);
+            background: #ffffff;
             backdrop-filter: blur(14px);
-            border: 1.5px solid rgba(0, 0, 0, 0.07);
+            border: 1.5px solid #e9d5ff;   /* visible purple border */
             border-radius: 1rem;
-            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 14px rgba(109, 40, 217, 0.07);
         }
         html.dark .sort-glass {
             background: rgba(18, 18, 26, 0.82);
             border: 1.5px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
         }
+
 
         /* Featured Products heading underline accent */
         .section-heading-accent {

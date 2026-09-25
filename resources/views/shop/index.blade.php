@@ -157,7 +157,8 @@
         <!-- Products Grid -->
         <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             <template x-for="product in paginatedProducts" :key="product.id">
-                <div class="rounded-2xl overflow-hidden card-hover flex flex-col group border border-slate-200/60 dark:border-white/8 bg-white dark:bg-white/[0.03] shadow-sm">
+                <div class="rounded-2xl overflow-hidden card-hover flex flex-col group border border-purple-100 dark:border-white/8 bg-white dark:bg-white/[0.03] shadow-[0_2px_12px_rgba(109,40,217,0.08)] dark:shadow-none">
+
                     <div class="relative h-52 sm:h-56 overflow-hidden bg-slate-100 dark:bg-white/5 cursor-pointer flex items-center justify-center" @click="openModal(product)">
                         <template x-if="product.image_url">
                             <img :src="product.image_url" :alt="product.name" class="object-cover w-full h-full group-hover:scale-[1.08] transition-transform duration-500 ease-out">
