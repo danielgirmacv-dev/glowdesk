@@ -12,14 +12,14 @@
             Back to Products
         </a>
         <p class="text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
-        <h1 class="text-3xl font-extrabold text-white">Edit Product</h1>
+        <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Edit Product</h1>
         <p class="text-slate-500 text-sm mt-1">Update details for {{ $product->name }}</p>
     </div>
 
     <!-- Form Card -->
-    <div class="glass-dark rounded-2xl p-8" style="border: 1px solid rgba(217,70,239,0.15); box-shadow: 0 20px 60px rgba(217,70,239,0.05);">
+    <div class="glass-dark rounded-2xl p-8 border border-slate-200/80 dark:border-white/10 shadow-sm">
 
-        @if($errors->any())
+        @if(isset($errors) && $errors->any())
         <div class="mb-6 glass border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm space-y-1">
             @foreach($errors->all() as $error)
                 <p class="flex items-center gap-2">
@@ -48,11 +48,11 @@
 
             <div class="grid grid-cols-2 gap-5">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Price (USD) <span class="text-glow-500">*</span></label>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Price (Birr) <span class="text-glow-500">*</span></label>
                     <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">$</span>
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">Br</span>
                         <input type="number" name="price" step="0.01" min="0" required value="{{ old('price', $product->price) }}" placeholder="0.00"
-                            class="input-field w-full rounded-xl py-3 pl-8 pr-4 text-sm">
+                            class="input-field w-full rounded-xl py-3 pl-10 pr-4 text-sm">
                     </div>
                 </div>
                 <div>

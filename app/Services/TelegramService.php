@@ -33,10 +33,10 @@ class TelegramService
             . "📱 *Phone:* {$order->phone}\n"
             . "🕒 *Time:* {$order->created_at->format('Y-m-d H:i:s')}\n\n"
             . "🛍 *Items:*\n- {$items}\n\n"
-            . "💰 *Total:* $" . number_format($order->total_amount, 2);
+            . "💰 *Total:* Br " . number_format($order->total_amount, 2);
 
         try {
-            $response = Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+            $response = Http::timeout(4)->post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
                 'chat_id' => $this->chatId,
                 'text' => $message,
                 'parse_mode' => 'Markdown',
@@ -62,7 +62,7 @@ class TelegramService
 
         try {
             // First, dynamically resolve the @username to a numeric chat_id using getUpdates
-            $updatesResponse = Http::get("https://api.telegram.org/bot{$this->botToken}/getUpdates");
+            $updatesResponse = Http::timeout(4)->get("https://api.telegram.org/bot{$this->botToken}/getUpdates");
             
             if ($updatesResponse->successful()) {
                 $updates = $updatesResponse->json('result') ?? [];
@@ -88,12 +88,12 @@ class TelegramService
             })->join("\n- ");
 
             $message = "✅ *Order Confirmed!*\n\n"
-                . "Hi {$order->customer_name}, your order from GlowDesk is now being processed 🎉\n\n"
+                . "Hi {$order->customer_name}, your order from GlowAddis is now being processed 🎉\n\n"
                 . "🛍 *Items:*\n- {$items}\n\n"
                 . "💰 *Total:* Br " . number_format($order->total_amount, 2) . "\n\n"
                 . "We'll be in touch shortly. Thank you!";
 
-            $response = Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+            $response = Http::timeout(4)->post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
                 'chat_id' => $targetChatId,
                 'text' => $message,
                 'parse_mode' => 'Markdown',
@@ -113,14 +113,14 @@ class TelegramService
             return;
         }
 
-        $message = "📝 *New Custom Item Request*\n\n"
+        $message = "📝 *Custom Order*\n\n"
             . "👤 *Customer:* {$name}\n"
             . "📱 *Phone:* {$phone}\n"
             . ($telegramUsername ? "✈️ *Telegram:* @{$telegramUsername}\n\n" : "\n")
-            . "💭 *Looking for:*\n_{$requestMessage}_";
+            . "💭 *Order Details / Request:*\n_{$requestMessage}_";
 
         try {
-            Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+            Http::timeout(4)->post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
                 'chat_id' => $this->chatId,
                 'text' => $message,
                 'parse_mode' => 'Markdown',
@@ -161,9 +161,9 @@ class TelegramService
     }
 
     /**
-     * Configures Telegram bot's menu button to open GlowDesk WebApp.
+     * Configures Telegram bot's menu button to open GlowAddis WebApp.
      */
-    public function setupChatMenuButton(string $webAppUrl, string $buttonText = 'Open GlowDesk'): array
+    public function setupChatMenuButton(string $webAppUrl, string $buttonText = 'Open GlowAddis'): array
     {
         if (!$this->botToken) {
             return ['success' => false, 'message' => 'Bot token is missing'];
@@ -171,7 +171,7 @@ class TelegramService
 
         $url = "https://api.telegram.org/bot{$this->botToken}/setChatMenuButton";
         
-        $response = Http::post($url, [
+        $response = Http::timeout(4)->post($url, [
             'menu_button' => [
                 'type' => 'web_app',
                 'text' => $buttonText,

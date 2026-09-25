@@ -27,11 +27,11 @@ class ChatbotController extends Controller
             $productList .= "- {$p->name}\n";
         }
 
-        $systemInstruction = "You are GlowBot, the official AI beauty assistant for GlowDesk — a premium beauty and skincare e-commerce store.
+        $systemInstruction = "You are GlowBot, the official AI beauty assistant for GlowAddis — a premium beauty and skincare e-commerce store.
 Your job is to chat naturally with customers AND detect their shopping intent.
 
 ─── STORE IDENTITY ───────────────────────────────────
-Store name  : GlowDesk
+Store name  : GlowAddis
 Bot name    : GlowBot
 Tone        : Friendly, warm, beauty-savvy
 
@@ -39,7 +39,7 @@ Tone        : Friendly, warm, beauty-savvy
 {$productList}
 ─── INTENT RULES ─────────────────────────────────────
 RULE 1 — ORDER intent
-If the user wants to BUY, ORDER, or PURCHASE a product,
+If the user wants to BUY, ORDER, or PURCHASE a product from the available list,
 respond ONLY in this exact format (no extra text):
 
 INTENT: ORDER
@@ -47,17 +47,21 @@ PRODUCT: <exact_product_name>
 
 RULE 2 — INQUIRY intent
 If the user asks about price, availability, recommendation,
-or details about a product, respond ONLY in this format:
+or details about an available product, respond ONLY in this format:
 
 INTENT: INQUIRY
 PRODUCT: <exact_product_name>
 
-RULE 3 — Indirect mentions
+RULE 3 — CUSTOM ORDER intent
+If the user asks for a product that is NOT listed in the available products, or asks how to place a custom order,
+warmly let them know they can place a custom order for any beauty or skincare product, and conclude your reply with [ACTION:OPEN_REQUEST].
+
+RULE 4 — Indirect mentions
 If the user mentions a skin concern without naming a product
 (e.g. \"something for dry skin\", \"help with dark spots\"),
 pick the most relevant product and use INQUIRY format.
 
-RULE 4 — General conversation
+RULE 5 — General conversation
 If the message is a greeting, casual talk, or unrelated topic,
 respond in a friendly, helpful way as GlowBot.
 
@@ -97,10 +101,10 @@ respond in a friendly, helpful way as GlowBot.
             ];
 
             try {
-                // Using gemini-3.6-flash endpoint
-                $response = Http::timeout(8)->withHeaders([
+                // Using gemini-flash-latest endpoint
+                $response = Http::timeout(5)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=' . $apiKey, $payload);
+                ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=' . $apiKey, $payload);
 
                 if ($response->successful()) {
                     $data = $response->json();
@@ -136,9 +140,14 @@ respond in a friendly, helpful way as GlowBot.
             }
         }
 
+        // Check for custom order request
+        if (str_contains($msg, 'custom') || str_contains($msg, 'not listed') || str_contains($msg, 'unlisted') || str_contains($msg, 'request') || str_contains($msg, 'cant find') || str_contains($msg, "can't find")) {
+            return "Looking for a product not in our shop? You can place a custom order anytime! I'm opening the Custom Order form for you now ✨ [ACTION:OPEN_REQUEST]";
+        }
+
         // Keywords for skin concerns
         if (str_contains($msg, 'hi') || str_contains($msg, 'hello') || str_contains($msg, 'hey')) {
-            return "Hello! 👋 Welcome to GlowDesk! I am GlowBot, your beauty assistant. How can I help you glow today?";
+            return "Hello! 👋 Welcome to GlowAddis! I am GlowBot, your beauty assistant. How can I help you glow today?";
         }
 
         if (str_contains($msg, 'oily') || str_contains($msg, 'acne') || str_contains($msg, 'cleanse')) {
@@ -158,6 +167,6 @@ respond in a friendly, helpful way as GlowBot.
         }
 
         $names = $products->pluck('name')->implode(', ');
-        return "I'm GlowBot, your beauty assistant! ✨ We have great skincare products available including: " . ($names ?: 'Cleanser, Moisturizer, Sunscreen, Serum') . ". Feel free to ask about any item!";
+        return "I'm GlowBot, your beauty assistant at GlowAddis! ✨ We have great skincare products available including: " . ($names ?: 'Cleanser, Moisturizer, Sunscreen, Serum') . ". Feel free to ask about any item or ask for a custom order!";
     }
 }

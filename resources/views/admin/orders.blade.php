@@ -228,7 +228,7 @@
                     </div>
                     <div class="glass rounded-xl p-4" style="border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Total</p>
-                        <p class="text-glow-400 font-bold text-sm" x-text="'$' + parseFloat(modal.order?.total_amount ?? 0).toFixed(2)"></p>
+                        <p class="text-glow-400 font-bold text-sm" x-text="'Br ' + parseFloat(modal.order?.total_amount ?? 0).toFixed(2)"></p>
                     </div>
                 </div>
 

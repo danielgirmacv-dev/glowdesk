@@ -12,7 +12,7 @@ class TelegramBotSetupCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'telegram:setup-webapp {--url= : The HTTPS web application URL} {--title=Open GlowDesk : The text on the bot menu button}';
+    protected $signature = 'telegram:setup-webapp {--url= : The HTTPS web application URL} {--title=Open GlowAddis : The text on the bot menu button}';
 
     /**
      * The console command description.

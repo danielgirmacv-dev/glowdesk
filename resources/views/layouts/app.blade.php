@@ -5,17 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="/glowdesk-logo.png">
-    <title>GlowDesk – @yield('title', 'Internal Store')</title>
+    <title>GlowAddis – @yield('title', 'Beauty Store')</title>
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
+    <!-- Early Theme Init Script (Zero FOUC) -->
+    <script>
+        (function() {
+            var saved = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowdesk_theme') || localStorage.getItem('theme');
+            var theme = saved || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-mode');
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.remove('light-mode');
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    
     <!-- Telegram WebApp SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script defer src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -42,115 +58,342 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-float { animation: float 4s ease-in-out infinite; }
-        
-        @keyframes pulse-soft {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.1); }
-        }
-        .animate-pulse-soft { animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        [x-cloak] { display: none !important; }
 
-        body { background: #0a0a0f; color: #e2e8f0; font-family: 'Inter', sans-serif; }
-        .glow-gradient { background: linear-gradient(135deg, #d946ef 0%, #7c3aed 50%, #2563eb 100%); }
-        .glow-text { background: linear-gradient(135deg, #f0abfc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
-        .glass-dark { background: rgba(10,10,20,0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
-        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(217, 70, 239, 0.2); }
-        .btn-glow { background: linear-gradient(135deg, #d946ef, #7c3aed); box-shadow: 0 4px 20px rgba(217, 70, 239, 0.4); transition: all 0.3s ease; }
-        .btn-glow:hover { box-shadow: 0 6px 30px rgba(217, 70, 239, 0.6); transform: translateY(-1px); }
-        .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; transition: all 0.2s; }
-        .input-field:focus { outline: none; border-color: #d946ef; box-shadow: 0 0 0 3px rgba(217,70,239,0.15); background: rgba(255,255,255,0.08); }
-        .input-field::placeholder { color: #64748b; }
-        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0a0a0f; } ::-webkit-scrollbar-thumb { background: #d946ef; border-radius: 3px; }
-        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(217,70,239,0.3); } 50% { box-shadow: 0 0 40px rgba(217,70,239,0.6); } }
-        .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-        /* Light Mode Overrides */
-        .light-mode { background: #f8fafc; color: #0f172a; }
-        .light-mode .glass { background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .light-mode .glass-dark { background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.1); }
-        .light-mode .text-white:not(.btn-glow) { color: #0f172a !important; }
-        .light-mode .text-slate-400, .light-mode .text-slate-500 { color: #475569 !important; }
-        .light-mode .input-field { background: #ffffff; border: 1px solid #cbd5e1; color: #0f172a; }
-        .light-mode .input-field:focus { background: #ffffff; border-color: #d946ef; box-shadow: 0 0 0 3px rgba(217,70,239,0.1); }
-        .light-mode .input-field::placeholder { color: #94a3b8; }
-        .light-mode .text-glow-400 { color: #a21caf !important; }
-        .light-mode .text-emerald-400 { color: #059669 !important; }
-        .light-mode .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.1) !important; }
-        .light-mode .border-emerald-500\/20 { border-color: rgba(5, 150, 105, 0.3) !important; }
-        .light-mode .text-red-400 { color: #dc2626 !important; }
-        .light-mode .bg-red-500\/10 { background-color: rgba(220, 38, 38, 0.1) !important; }
-        .light-mode .border-red-500\/20 { border-color: rgba(220, 38, 38, 0.3) !important; }
-        .light-mode .bg-slate-900 { background-color: #f1f5f9 !important; }
-        .light-mode .from-glow-900\/40 { --tw-gradient-from: rgba(217, 70, 239, 0.1) !important; }
-        .light-mode .to-slate-900 { --tw-gradient-to: rgba(255, 255, 255, 1) !important; }
-        .light-mode [style*="rgba(10,10,15,0.95)"] { background: linear-gradient(to right, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.3)) !important; }
-        .light-mode ::-webkit-scrollbar-track { background: #f1f5f9; }
+        /* Clean base colors & fonts */
+        html {
+            background-color: #faf8fc;
+            color-scheme: light;
+        }
+        html.dark {
+            background-color: #0d0d12;
+            color-scheme: dark;
+        }
 
-        /* Light Mode Custom Header (Nav) Overrides */
-        .light-mode nav.glass-dark {
-            background: linear-gradient(135deg, #d946ef 0%, #a21caf 100%) !important;
-            border-bottom: none !important;
-            box-shadow: 0 10px 40px rgba(217, 70, 239, 0.3) !important;
+        body {
+            background-color: #faf8fc;
+            color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-        .light-mode nav.glass-dark .text-slate-400 { color: rgba(255,255,255,0.85) !important; }
-        .light-mode nav.glass-dark .text-slate-400:hover { color: #ffffff !important; }
-        .light-mode nav.glass-dark .glow-text, .light-mode nav.glass-dark .text-white { 
-            -webkit-text-fill-color: #ffffff !important;
-            color: #ffffff !important; 
-            text-shadow: 0 2px 10px rgba(255,255,255,0.2) !important;
+
+        /* Clean, controlled gradients (no neon color spill) */
+        .glow-gradient {
+            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
         }
-        .light-mode nav.glass-dark .glow-gradient { background: rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.4) !important; }
+        .glow-text {
+            background: linear-gradient(135deg, #a21caf, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass styles - sharp, crisp, subtle depth */
+        .glass {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Modern card hover — premium lift + shadow bloom */
+        .card-hover {
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.015);
+            box-shadow: 0 22px 44px -8px rgba(0, 0, 0, 0.13);
+        }
+
+        /* Premium gradient button with background-position shimmer */
+        .btn-glow {
+            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 55%, #a21caf 100%);
+            background-size: 200% 200%;
+            background-position: 0% 50%;
+            color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(124, 58, 237, 0.28);
+            transition: all 0.22s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 6px 22px rgba(124, 58, 237, 0.48);
+            transform: translateY(-1px);
+            background-position: 100% 50%;
+        }
+        .btn-glow:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+        }
+
+        /* Crisp clean input fields */
+        .input-field {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #a21caf;
+            box-shadow: 0 0 0 3px rgba(162, 28, 175, 0.12);
+        }
+        .input-field::placeholder { color: #94a3b8; }
+
+        /* Subtle scrollbar */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Ensure clean white text on gradient elements */
+        button.text-white, a.text-white, .btn-glow, .glow-gradient, .btn-glow *, .glow-gradient * {
+            color: #ffffff !important;
+        }
+
+        /* Light Mode navbar & dropdowns */
+        nav.glass-dark {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+        nav.glass-dark .text-slate-400 { color: #64748b; }
+        nav.glass-dark .text-slate-400:hover { color: #0f172a; }
+        nav.glass-dark .text-white { color: #0f172a; }
+
+        .cart-dropdown {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+        }
+        .cart-dropdown .cart-header,
+        .cart-dropdown .cart-footer {
+            background: #f8fafc;
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        .cart-dropdown .cart-header h3 { color: #0f172a; }
+        .cart-dropdown .cart-item-name { color: #0f172a; }
+
+        .chat-window {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.15);
+        }
+        .chat-header {
+            background: #f8fafc;
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        .chat-header h3 { color: #0f172a; }
+        .chat-messages { background: #faf8fc; }
+        .chat-model-msg {
+            background: #ffffff;
+            color: #1e293b;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+        .chat-chips, .chat-custom-req-bar, .chat-input-bar {
+            background: #ffffff;
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        .chat-chips button {
+            background: #f3f0f7;
+            color: #7c3aed;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+        }
+        .chat-chips button:hover {
+            background: #ede9fe;
+        }
+        .chat-input-field {
+            background: #f8fafc;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* ========================================================
+           DARK MODE: Sleek, Crisp, Apple-Style (NO NEON GLOW)
+           ======================================================== */
+        html.dark body, body.dark {
+            background-color: #0d0d12 !important;
+            color: #f1f5f9 !important;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        html.dark .glow-text {
+            background: linear-gradient(135deg, #f0abfc, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        html.dark .glass {
+            background: rgba(22, 22, 30, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+        }
+        html.dark .glass-dark {
+            background: rgba(18, 18, 26, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        }
+        html.dark .card-hover:hover {
+            box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(124, 58, 237, 0.15) !important;
+        }
+        html.dark .input-field {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            color: #f1f5f9 !important;
+        }
+        html.dark .input-field:focus {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: #c026d3 !important;
+            box-shadow: 0 0 0 3px rgba(192, 38, 211, 0.2) !important;
+        }
+        html.dark .input-field::placeholder { color: #64748b !important; }
+
+        html.dark nav.glass-dark {
+            background: rgba(13, 13, 18, 0.82) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark nav.glass-dark .text-white { color: #ffffff !important; }
+        html.dark nav.glass-dark .text-slate-400 { color: #94a3b8 !important; }
+        html.dark nav.glass-dark .text-slate-400:hover { color: #ffffff !important; }
+
+        html.dark .cart-dropdown {
+            background: #14141e !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+        }
+        html.dark .cart-dropdown .cart-header,
+        html.dark .cart-dropdown .cart-footer {
+            background: #191926 !important;
+            border-color: rgba(255, 255, 255, 0.06) !important;
+        }
+        html.dark .cart-dropdown .cart-header h3 { color: #ffffff !important; }
+        html.dark .cart-dropdown .cart-item-name { color: #f1f5f9 !important; }
+
+        html.dark .chat-window {
+            background: #14141e !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+        }
+        html.dark .chat-header {
+            background: #191926 !important;
+            border-color: rgba(255, 255, 255, 0.06) !important;
+        }
+        html.dark .chat-header h3 { color: #ffffff !important; }
+        html.dark .chat-messages { background: #0f0f16 !important; }
+        html.dark .chat-model-msg {
+            background: #191926 !important;
+            color: #e2e8f0 !important;
+            border: 1px solid rgba(255, 255, 255, 0.07) !important;
+        }
+        html.dark .chat-chips, html.dark .chat-custom-req-bar, html.dark .chat-input-bar {
+            background: #14141e !important;
+            border-color: rgba(255, 255, 255, 0.06) !important;
+        }
+        html.dark .chat-chips button {
+            background: rgba(255, 255, 255, 0.06) !important;
+            color: #d8b4fe !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        html.dark .chat-chips button:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+        html.dark .chat-input-field {
+            background: rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* ═══════════════════════════════════════════
+           MODERNIZATION v2 — New Component Styles
+           ═══════════════════════════════════════════ */
+
+        /* Hero slideshow — rich purple gradient, works in any theme */
+        .hero-slideshow {
+            background: linear-gradient(135deg, #3b0764 0%, #4c1d95 30%, #312e81 65%, #6b21a8 100%);
+        }
+
+        /* Product card glass overlay — bottom fade */
+        .product-card-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.58) 48%, transparent 100%);
+        }
+
+        /* Category / sort chip — active glowing state */
+        .chip-active {
+            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
+            color: #ffffff !important;
+            box-shadow: 0 2px 16px rgba(124, 58, 237, 0.45);
+            border-color: transparent !important;
+        }
+
+        /* Search + sort container — better glass */
+        .sort-glass {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(0, 0, 0, 0.07);
+            border-radius: 1rem;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05);
+        }
+        html.dark .sort-glass {
+            background: rgba(18, 18, 26, 0.82);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
+        }
+
+        /* Featured Products heading underline accent */
+        .section-heading-accent {
+            width: 2.5rem;
+            height: 3px;
+            background: linear-gradient(90deg, #c026d3, #7c3aed);
+            border-radius: 9999px;
+            margin-top: 0.35rem;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased transition-colors duration-500"
-      x-data="{ theme: localStorage.getItem('theme') || 'dark' }"
-      :class="theme === 'light' ? 'light-mode' : ''"
-      x-init="$watch('theme', val => localStorage.setItem('theme', val))">
-
-    <!-- Ambient background orbs -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full opacity-20" style="background: radial-gradient(circle, #d946ef, transparent 70%);"></div>
-        <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full opacity-20" style="background: radial-gradient(circle, #7c3aed, transparent 70%);"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5" style="background: radial-gradient(circle, #2563eb, transparent 70%);"></div>
-    </div>
+<body class="min-h-screen flex flex-col antialiased transition-colors duration-200">
 
     <!-- Navbar -->
-    <nav class="glass-dark sticky top-0 z-50 border-b border-white/8">
+    <nav class="glass-dark sticky top-0 z-50 border-b border-black/5 dark:border-white/8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <!-- Logo -->
                 <a href="{{ route('shop.index') }}" class="flex items-center gap-3 group">
-                    <div class="w-9 h-9 rounded-xl glow-gradient flex items-center justify-center pulse-glow">
+                    <div class="w-9 h-9 rounded-xl glow-gradient flex items-center justify-center shadow-sm">
                         <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2s-4 2-4 8c0 4 4 12 4 12s4-8 4-12c0-6-4-8-4-8z"/>
                             <path d="M14 4s4 4 4 8c0 3-2 6-6 10"/>
                             <path d="M10 4s-4 4-4 8c0 3 2 6 6 10"/>
                         </svg>
                     </div>
-                    <span class="font-bold text-xl tracking-tight glow-text">GlowDesk</span>
+                    <span class="font-bold text-xl tracking-tight glow-text">GlowAddis</span>
                 </a>
 
                 <!-- Nav links -->
                 <div class="flex items-center gap-2">
                     <!-- Shopping Cart -->
-                    <div class="relative z-50 flex items-center mr-2">
-                        <button @click="$store.cart.open = !$store.cart.open" @click.away="$store.cart.open = false" class="relative p-2 text-slate-400 hover:text-white transition-colors">
+                    <div class="relative z-50 flex items-center mr-2" x-data @keydown.escape.window="$store.cart.open = false">
+                        <button @click="$store.cart.open = !$store.cart.open" class="relative p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                             <span class="hidden sm:inline font-bold ml-1 text-sm">Cart</span>
-                            <span x-show="$store.cart.count > 0" x-transition x-text="$store.cart.count" class="absolute top-0 right-0 sm:right-6 -mt-1 -mr-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-[#0f0f14] shadow-md"></span>
+                            <span x-show="$store.cart.count > 0" x-transition x-text="$store.cart.count" class="absolute top-0 right-0 sm:right-6 -mt-1 -mr-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-[#0d0d12] shadow-md"></span>
                         </button>
+
+                        <!-- Click-away overlay (transparent) -->
+                        <div x-show="$store.cart.open" x-cloak @click="$store.cart.open = false" class="fixed inset-0 z-[89]" aria-hidden="true"></div>
                         
                         <!-- Dropdown -->
-                        <div x-show="$store.cart.open" x-transition.opacity.duration.200ms style="display: none;" class="absolute right-0 top-full mt-3 w-[85vw] max-w-[320px] sm:w-[22rem] bg-[#0f0f14] border border-[#7c3aed]/50 shadow-[0_10px_40px_rgba(124,58,237,0.3)] rounded-2xl overflow-hidden backdrop-blur-xl z-[90]">
-                            <div class="bg-[#1a1a24]/90 p-3 sm:p-4 border-b border-white/5">
-                                <h3 class="font-bold text-white uppercase tracking-wider text-xs sm:text-sm flex justify-between items-center">
+                        <div x-show="$store.cart.open" x-cloak x-transition.opacity.duration.200ms class="cart-dropdown absolute right-0 top-full mt-3 w-[85vw] max-w-[320px] sm:w-[22rem] rounded-2xl overflow-hidden z-[90]">
+                            <div class="cart-header p-3 sm:p-4 border-b">
+                                <h3 class="font-bold uppercase tracking-wider text-xs sm:text-sm flex justify-between items-center text-slate-900 dark:text-white">
                                     Your Cart
-                                    <span class="text-[#f0abfc] text-xs bg-[#7c3aed]/20 px-2 py-0.5 rounded-full" x-text="$store.cart.count + ' items'"></span>
+                                    <span class="text-purple-700 dark:text-purple-300 text-xs bg-purple-100 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/40 px-2 py-0.5 rounded-full font-semibold" x-text="$store.cart.count + ' items'"></span>
                                 </h3>
                             </div>
                             
@@ -161,31 +404,31 @@
                                     </div>
                                 </template>
                                 <template x-for="item in $store.cart.items" :key="item.id">
-                                    <div class="flex items-center justify-between py-3 border-b border-white/5 last:border-0 relative group">
+                                    <div class="flex items-center justify-between py-3 border-b border-slate-100 dark:border-white/5 last:border-0 relative group">
                                         <div class="flex items-center gap-3 w-3/4">
-                                            <div class="w-10 h-10 rounded-lg bg-[#1a1a24] overflow-hidden flex-shrink-0 flex items-center justify-center border border-white/5">
+                                            <div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-white/5 overflow-hidden flex-shrink-0 flex items-center justify-center border border-slate-200/80 dark:border-white/10">
                                                 <template x-if="item.image_url"><img :src="item.image_url" class="w-full h-full object-cover"></template>
                                                 <template x-if="!item.image_url"><span class="text-xl">✨</span></template>
                                             </div>
                                             <div class="flex flex-col flex-1 pl-1">
-                                                <span class="text-white font-semibold text-sm leading-tight line-clamp-1" x-text="item.name"></span>
-                                                <span class="text-slate-400 text-xs mt-0.5" x-text="item.quantity + ' × Br ' + parseFloat(item.price).toFixed(2)"></span>
+                                                <span class="cart-item-name font-semibold text-sm leading-tight line-clamp-1" x-text="item.name"></span>
+                                                <span class="text-slate-500 dark:text-slate-400 text-xs mt-0.5" x-text="item.quantity + ' × Br ' + parseFloat(item.price).toFixed(2)"></span>
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <button @click="$store.cart.remove(item.id)" class="w-6 h-6 rounded-full flex items-center justify-center text-slate-500 hover:bg-red-500/20 hover:text-red-400 transition-colors" title="Remove">×</button>
+                                            <button @click="$store.cart.remove(item.id)" class="w-6 h-6 rounded-full flex items-center justify-center text-slate-400 hover:bg-red-500/10 hover:text-red-500 transition-colors" title="Remove">×</button>
                                         </div>
                                     </div>
                                 </template>
                             </div>
                             
                             <template x-if="$store.cart.items.length > 0">
-                                <div class="bg-[#1a1a24]/90 p-5 border-t border-white/5 space-y-4">
-                                    <div class="flex justify-between items-center font-bold text-white mb-2">
-                                        <span class="text-slate-400 text-sm">Total</span>
-                                        <span class="text-[#f0abfc] text-xl" x-text="'Br ' + $store.cart.total.toFixed(2)"></span>
+                                <div class="cart-footer p-4 sm:p-5 border-t space-y-3">
+                                    <div class="flex justify-between items-center font-bold text-slate-900 dark:text-white mb-2">
+                                        <span class="text-slate-500 text-sm">Total</span>
+                                        <span class="text-purple-600 dark:text-purple-300 text-xl" x-text="'Br ' + $store.cart.total.toFixed(2)"></span>
                                     </div>
-                                    <button @click="$dispatch('open-cart-checkout'); $store.cart.open = false" class="w-full bg-gradient-to-r from-[#d946ef] to-[#7c3aed] text-white hover:brightness-110 py-3 rounded-xl font-bold transition-all shadow-[0_4px_15px_rgba(217,70,239,0.4)] hover:-translate-y-0.5">
+                                    <button @click="window.dispatchEvent(new CustomEvent('open-cart-checkout')); $dispatch('open-cart-checkout'); $store.cart.open = false" class="w-full btn-glow py-3 rounded-xl font-bold transition-all shadow-sm">
                                         Proceed to Checkout
                                     </button>
                                 </div>
@@ -193,12 +436,13 @@
                         </div>
                     </div>
 
-                    <!-- Theme Toggle -->
-                    <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="px-2 py-2 text-slate-400 hover:text-glow-400 transition-colors mr-2">
-                        <!-- Sun Icon for Dark Mode -->
-                        <svg x-show="theme === 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                        <!-- Moon Icon for Light Mode -->
-                        <svg x-show="theme === 'light'" style="display: none;" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    <!-- Theme Toggle Pill -->
+                    <button @click="$store.theme.toggle()" type="button"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/15 transition-all mr-2 text-xs font-semibold"
+                        :title="$store.theme.current === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                        <svg x-cloak x-show="$store.theme.current === 'dark'" class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        <svg x-cloak x-show="$store.theme.current === 'light'" class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                        <span class="hidden sm:inline" x-text="$store.theme.current === 'dark' ? 'Light' : 'Dark'"></span>
                     </button>
 
                     @if(request()->is('admin*'))
@@ -252,7 +496,7 @@
             </div>
         @endif
 
-        @if($errors->any())
+        @if(isset($errors) && $errors->any())
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 8000)" x-show="show"
                  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0"
                  x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-8"
@@ -277,7 +521,7 @@
         @yield('content')
     </main>
 
-    <footer class="relative z-10 border-t border-white/5 mt-20 py-8">
+    <footer class="relative z-10 border-t border-slate-200/80 dark:border-white/5 mt-20 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             {{-- Secret: click logo 3 times to access admin --}}
             <div class="flex items-center gap-2 cursor-pointer select-none"
@@ -288,99 +532,143 @@
                     timer = setTimeout(() => clicks = 0, 2000);
                     if (clicks >= 3) { window.location.href = '{{ route('admin.dashboard') }}'; }
                  ">
-                <div class="w-6 h-6 rounded-lg glow-gradient flex items-center justify-center">
+                <div class="w-6 h-6 rounded-lg glow-gradient flex items-center justify-center shadow-sm">
                     <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 2s-4 2-4 8c0 4 4 12 4 12s4-8 4-12c0-6-4-8-4-8z"/>
                         <path d="M14 4s4 4 4 8c0 3-2 6-6 10"/>
                         <path d="M10 4s-4 4-4 8c0 3 2 6 6 10"/>
                     </svg>
                 </div>
-                <span class="text-sm font-semibold glow-text">GlowDesk</span>
+                <span class="text-sm font-semibold glow-text">GlowAddis</span>
             </div>
-            <p class="text-xs text-slate-600">&copy; {{ date('Y') }} GlowDesk Internal System. All rights reserved.</p>
+            <p class="text-xs text-slate-500">&copy; {{ date('Y') }} GlowAddis. All rights reserved.</p>
         </div>
+    </footer>
+
     <!-- GlowBot Chat Widget -->
     <div x-data="glowbot()" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
         <!-- Chat Window -->
-        <div x-show="open" x-transition.opacity.scale.origin.bottom.right 
+        <div x-show="open" x-cloak x-transition.opacity.scale.origin.bottom.right 
              :class="isMaximized ? '!fixed !inset-0 sm:!inset-10 !w-auto !h-auto !mb-0 z-[110] sm:rounded-2xl rounded-none' : 'mb-4 w-[350px] sm:w-[400px] h-[500px] rounded-2xl'"
-             class="bg-[#0f0f14] border border-[#7c3aed]/50 shadow-[0_10px_40px_rgba(124,58,237,0.3)] flex flex-col overflow-hidden transition-all duration-300" 
-             style="display: none;">
+             class="chat-window flex flex-col overflow-hidden transition-all duration-300">
             <!-- Header -->
-            <div class="bg-[#1a1a24]/90 p-4 border-b border-white/5 flex items-center justify-between shadow-sm">
+            <div class="chat-header p-4 border-b flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-[#d946ef] to-[#7c3aed] flex items-center justify-center text-white relative shadow-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0f0f14] rounded-full"></span>
+                    <div class="w-10 h-10 rounded-full glow-gradient flex items-center justify-center text-white relative shadow-xs">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-[#0d0d12] rounded-full"></span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-white text-sm flex items-center gap-2">GlowBot <span class="bg-[#7c3aed]/20 text-[#f0abfc] text-[9px] px-1.5 py-0.5 rounded uppercase tracking-wider">AI</span></h3>
-                        <p class="text-[10px] text-glow-400 font-medium">Online | Ready to assist</p>
+                        <h3 class="font-bold text-sm flex items-center gap-2">GlowBot <span class="bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider">AI</span></h3>
+                        <p class="text-[10px] text-purple-600 dark:text-purple-400 font-medium">Online | Ready to assist</p>
                     </div>
                 </div>
                 <div class="flex gap-1">
-                    <button @click="isMaximized = !isMaximized" class="text-slate-400 hover:text-white transition w-8 h-8 flex items-center justify-center rounded-xl hover:bg-white/10">
+                    <button @click="isMaximized = !isMaximized" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-white/10">
                         <svg x-show="!isMaximized" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-                        <svg x-show="isMaximized" style="display: none;" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h4v4m0-4l-5 5m16-9h-4V4m0 4l5-5"/></svg>
+                        <svg x-show="isMaximized" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h4v4m0-4l-5 5m16-9h-4V4m0 4l5-5"/></svg>
                     </button>
-                    <button @click="open = false; isMaximized = false" class="text-slate-400 hover:text-white transition w-8 h-8 flex items-center justify-center rounded-xl hover:bg-white/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                    <button @click="open = false; isMaximized = false" class="text-slate-400 hover:text-slate-700 dark:hover:text-white transition w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-white/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
                 </div>
             </div>
             
             <!-- Messages Array -->
-            <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-[#0f0f14]" id="chatbox">
+            <div class="chat-messages flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar" id="chatbox">
                 <template x-for="(msg, index) in messages" :key="index">
                     <div :class="msg.role === 'model' ? 'justify-start' : 'justify-end'" class="flex">
-                        <div :class="msg.role === 'model' ? 'bg-[#1a1a24] text-slate-200 border border-white/5 rounded-tr-xl' : 'bg-gradient-to-r from-[#d946ef] to-[#7c3aed] text-white rounded-tl-xl shadow-[0_4px_15px_rgba(217,70,239,0.3)]'" 
-                             class="max-w-[85%] rounded-b-xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words border-t border-white/5" x-text="msg.text"></div>
+                        <div :class="msg.role === 'model' ? 'chat-model-msg rounded-tr-xl' : 'btn-glow text-white rounded-tl-xl shadow-xs'" 
+                             class="max-w-[85%] rounded-b-xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words" x-text="msg.text"></div>
                     </div>
                 </template>
                 <template x-if="isLoading">
                     <div class="flex justify-start">
-                        <div class="bg-[#1a1a24] text-slate-400 border border-white/5 rounded-tr-xl rounded-b-xl px-4 py-3 text-sm flex gap-1">
-                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-[#7c3aed] rounded-full shadow-[0_0_5px_rgba(124,58,237,0.5)]"></span>
-                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-[#7c3aed] rounded-full shadow-[0_0_5px_rgba(124,58,237,0.5)]" style="animation-delay: 0.2s"></span>
-                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-[#7c3aed] rounded-full shadow-[0_0_5px_rgba(124,58,237,0.5)]" style="animation-delay: 0.4s"></span>
+                        <div class="chat-model-msg rounded-tr-xl rounded-b-xl px-4 py-3 text-sm flex gap-1.5 items-center">
+                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-purple-600 rounded-full"></span>
+                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-purple-600 rounded-full" style="animation-delay: 0.2s"></span>
+                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-purple-600 rounded-full" style="animation-delay: 0.4s"></span>
                         </div>
                     </div>
                 </template>
             </div>
             
             <!-- Quick Chips -->
-            <div x-show="messages.length === 1 && !isLoading" class="px-4 py-2.5 flex gap-2 overflow-x-auto custom-scrollbar border-t border-white/5 bg-[#0f0f14]">
-                <button @click="send('Best products for oily skin?')" class="whitespace-nowrap flex-shrink-0 bg-[#1a1a24] hover:bg-[#7c3aed]/30 border border-white/10 hover:border-[#7c3aed]/50 text-xs text-glow-300 font-medium px-3 py-1.5 rounded-full transition shadow-sm">Oily skin?</button>
-                <button @click="send('Do you have SPF products?')" class="whitespace-nowrap flex-shrink-0 bg-[#1a1a24] hover:bg-[#7c3aed]/30 border border-white/10 hover:border-[#7c3aed]/50 text-xs text-glow-300 font-medium px-3 py-1.5 rounded-full transition shadow-sm">SPF products?</button>
-                <button @click="send('What is currently on sale?')" class="whitespace-nowrap flex-shrink-0 bg-[#1a1a24] hover:bg-[#7c3aed]/30 border border-white/10 hover:border-[#7c3aed]/50 text-xs text-glow-300 font-medium px-3 py-1.5 rounded-full transition shadow-sm">On sale?</button>
+            <div x-show="messages.length === 1 && !isLoading" class="chat-chips px-4 py-2 flex gap-2 overflow-x-auto custom-scrollbar border-t">
+                <button @click="send('Best products for oily skin?')" class="whitespace-nowrap flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full transition">Oily skin?</button>
+                <button @click="send('Do you have SPF products?')" class="whitespace-nowrap flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full transition">SPF products?</button>
+                <button @click="send('I want to make a custom order')" class="whitespace-nowrap flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full transition">Custom order?</button>
             </div>
             
-            <!-- Explicit Alternative UI Button for Custom Requests -->
-            <div class="px-4 py-2.5 border-t border-white/5 bg-[#1a1a24]/90 flex items-center justify-center">
-                <button type="button" @click="$dispatch('open-custom-request'); open = false; isMaximized = false" class="w-full py-2 bg-gradient-to-r from-white/5 to-white/10 hover:from-[#7c3aed]/20 hover:to-[#d946ef]/20 border border-white/10 rounded-xl text-glow-200 text-[11px] font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Product not listed? Request a custom order!
+            <!-- Explicit Alternative UI Button for Custom Order -->
+            <div class="chat-custom-req-bar px-4 py-2.5 border-t flex items-center justify-center">
+                <button type="button" @click="$dispatch('open-custom-request'); open = false; isMaximized = false" class="w-full py-2 bg-purple-50 dark:bg-white/5 hover:bg-purple-100 dark:hover:bg-white/10 border border-purple-200 dark:border-white/10 rounded-xl text-purple-700 dark:text-purple-300 text-[11px] font-semibold flex items-center justify-center gap-2 transition">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Product not listed? Request a Custom Order!
                 </button>
             </div>
             
             <!-- Input Area -->
-            <form @submit.prevent="send()" class="p-3 bg-[#1a1a24]/90 border-t border-white/5 flex gap-2 items-center">
-                <input x-model="input" type="text" placeholder="Ask GlowBot..." class="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm !text-white placeholder:text-slate-500 focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition">
-                <button type="submit" :disabled="isLoading || !input.trim()" class="bg-gradient-to-r from-[#d946ef] to-[#7c3aed] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100 !text-white w-12 h-12 flex items-center justify-center flex-shrink-0 rounded-xl transition shadow-[0_0_15px_rgba(124,58,237,0.4)]">
-                    <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            <form @submit.prevent="send()" class="chat-input-bar p-3 border-t flex gap-2 items-center">
+                <input x-model="input" type="text" placeholder="Ask GlowBot..." class="chat-input-field flex-1 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-600 transition">
+                <button type="submit" :disabled="isLoading || !input.trim()" class="btn-glow disabled:opacity-40 disabled:cursor-not-allowed !text-white w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-xl transition shadow-xs">
+                    <svg class="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                 </button>
             </form>
         </div>
         
         <!-- Floating FAB -->
         <button @click="open = !open; if(open) hasUnread = false" 
-                class="w-14 h-14 bg-gradient-to-r from-[#d946ef] to-[#7c3aed] rounded-full shadow-[0_4px_20px_rgba(124,58,237,0.5)] flex items-center justify-center text-white hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(124,58,237,0.6)] transition-all relative border border-white/10 z-[101]">
-            <svg x-show="!open" class="w-7 h-7 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-            <svg x-show="open" style="display: none;" class="w-7 h-7 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            <span x-show="hasUnread && !open" class="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-[#0f0f14] shadow-md z-10 transition transform scale-100 origin-bottom-left">1</span>
+                class="relative w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-105 transition-all z-[101] group">
+            <!-- Ring pulse -->
+            <span class="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 animate-ping opacity-20 group-hover:opacity-30"></span>
+            <!-- Solid circle -->
+            <span class="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 shadow-lg"></span>
+            <svg x-show="!open" class="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+            <svg x-show="open" x-cloak class="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span x-show="hasUnread && !open" class="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-[#0d0d12] shadow-sm z-10"></span>
         </button>
     </div>
 
     @stack('scripts')
     <script>
         document.addEventListener('alpine:init', () => {
+            Alpine.store('theme', {
+                current: (function() {
+                    return localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowdesk_theme') || localStorage.getItem('theme') || 'dark';
+                })(),
+                init() {
+                    this.apply();
+                },
+                toggle() {
+                    this.current = this.current === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem('glowaddis_theme', this.current);
+                    localStorage.setItem('glowdesk_theme', this.current);
+                    localStorage.setItem('theme', this.current);
+                    this.apply();
+                },
+                set(val) {
+                    this.current = val;
+                    localStorage.setItem('glowaddis_theme', val);
+                    localStorage.setItem('glowdesk_theme', val);
+                    localStorage.setItem('theme', val);
+                    this.apply();
+                },
+                apply() {
+                    const isLight = this.current === 'light';
+                    document.documentElement.classList.toggle('light-mode', isLight);
+                    document.documentElement.classList.toggle('dark', !isLight);
+                    if (document.body) {
+                        document.body.classList.toggle('light-mode', isLight);
+                        document.body.classList.toggle('dark', !isLight);
+                    }
+                    if (window.Telegram && window.Telegram.WebApp) {
+                        const tg = window.Telegram.WebApp;
+                        try {
+                            if (tg.setHeaderColor) tg.setHeaderColor(isLight ? '#faf8fc' : '#0d0d12');
+                            if (tg.setBackgroundColor) tg.setBackgroundColor(isLight ? '#faf8fc' : '#0d0d12');
+                        } catch(e) {}
+                    }
+                }
+            });
+
             Alpine.data('glowbot', () => ({
                 open: false,
                 isMaximized: false,
@@ -467,7 +755,7 @@
                 items: [],
                 open: false,
                 init() {
-                    const saved = localStorage.getItem('glowdesk_cart');
+                    const saved = localStorage.getItem('glowaddis_cart') || localStorage.getItem('glowdesk_cart');
                     if (saved) { this.items = JSON.parse(saved); }
                 },
                 add(product) {
@@ -485,7 +773,10 @@
                     this.items = [];
                     this.save();
                 },
-                save() { localStorage.setItem('glowdesk_cart', JSON.stringify(this.items)); },
+                save() { 
+                    localStorage.setItem('glowaddis_cart', JSON.stringify(this.items)); 
+                    localStorage.setItem('glowdesk_cart', JSON.stringify(this.items)); 
+                },
                 get count() { return this.items.reduce((c, i) => c + i.quantity, 0); },
                 get total() { return this.items.reduce((t, i) => t + (i.price * i.quantity), 0); }
             });
@@ -513,10 +804,12 @@
                                 username: unsafeUser.username || '',
                             };
                             console.log('✨ Telegram WebApp User Loaded:', this.user);
-                        }
 
-                        if (tg.colorScheme) {
-                            document.body.classList.toggle('light-mode', tg.colorScheme === 'light');
+                            // Only sync theme with Telegram if inside TMA AND user has not set a local preference
+                            const hasManualTheme = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowdesk_theme') || localStorage.getItem('theme');
+                            if (!hasManualTheme && tg.colorScheme) {
+                                Alpine.store('theme').set(tg.colorScheme);
+                            }
                         }
                     }
                 }
@@ -524,7 +817,10 @@
         });
     </script>
     @if(session('clear_cart'))
-        <script>localStorage.removeItem('glowdesk_cart');</script>
+        <script>
+            localStorage.removeItem('glowaddis_cart');
+            localStorage.removeItem('glowdesk_cart');
+        </script>
     @endif
 </body>
 </html>

@@ -12,14 +12,14 @@
             Back to Products
         </a>
         <p class="text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
-        <h1 class="text-3xl font-extrabold text-white">Add New Product</h1>
+        <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Add New Product</h1>
         <p class="text-slate-500 text-sm mt-1">Fill in the details to create a new store listing.</p>
     </div>
 
     <!-- Form Card -->
-    <div class="glass-dark rounded-2xl p-8" style="border: 1px solid rgba(217,70,239,0.15); box-shadow: 0 20px 60px rgba(217,70,239,0.05);">
+    <div class="glass-dark rounded-2xl p-8 border border-slate-200/80 dark:border-white/10 shadow-sm">
 
-        @if($errors->any())
+        @if(isset($errors) && $errors->any())
         <div class="mb-6 glass border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm space-y-1">
             @foreach($errors->all() as $error)
                 <p class="flex items-center gap-2">

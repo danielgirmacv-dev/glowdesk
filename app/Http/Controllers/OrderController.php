@@ -187,6 +187,6 @@ class OrderController extends Controller
             \Illuminate\Support\Facades\Log::error('Custom request notification dispatch failed: ' . $e->getMessage());
         }
 
-        return redirect()->route('shop.index')->with('success', 'Your custom request has been sent! We will check our stock and get back to you shortly.');
+        return redirect()->route('shop.index')->with('success', 'Your custom order has been sent! We will check our stock and get back to you shortly.');
     }
 }
