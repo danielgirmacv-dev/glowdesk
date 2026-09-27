@@ -82,11 +82,11 @@
             @if($products->onFirstPage())
                 <span class="text-slate-400 dark:text-slate-600 cursor-not-allowed">← Previous</span>
             @else
-                <a href="{{ $products->previousPageUrl() }}" class="text-rose-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">← Previous</a>
+                <a href="{{ $products->previousPageUrl() }}" class="text-rose-600 dark:text-glow-400 hover:text-rose-900 dark:hover:text-white transition">← Previous</a>
             @endif
 
             @if($products->hasMorePages())
-                <a href="{{ $products->nextPageUrl() }}" class="text-rose-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">Next →</a>
+                <a href="{{ $products->nextPageUrl() }}" class="text-rose-600 dark:text-glow-400 hover:text-rose-900 dark:hover:text-white transition">Next →</a>
             @else
                 <span class="text-slate-400 dark:text-slate-600 cursor-not-allowed">Next →</span>
             @endif

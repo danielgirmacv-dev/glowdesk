@@ -95,9 +95,9 @@
 
         <!-- Brand Hero Text -->
         <div class="text-center mb-10">
-            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-3 text-slate-900 dark:text-white">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-3">
                 <span class="glow-text">GlowAddis</span><br>
-                <span class="text-slate-900 dark:text-white text-3xl sm:text-5xl font-semibold">Beauty delivered to your desk</span>
+                <span class="beauty-tagline text-3xl sm:text-5xl font-semibold inline-block mt-1">Beauty delivered to your desk</span>
             </h1>
             <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
                 Discover and order premium cosmetics and beauty products — effortlessly.
@@ -195,7 +195,7 @@
                                         <div class="flex items-center gap-1">
                                             <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                             <template x-if="$store.cart.items.find(i => i.id === product.id).quantity > 1">
-                                                <span x-text="$store.cart.items.find(i => i.id === product.id).quantity" class="absolute -top-1.5 -right-1.5 bg-purple-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-xs"></span>
+                                                <span x-text="$store.cart.items.find(i => i.id === product.id).quantity" class="absolute -top-1.5 -right-1.5 bg-rose-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-xs"></span>
                                             </template>
                                         </div>
                                     </template>
@@ -221,7 +221,7 @@
 
             <div x-show="filteredProducts.length === 0" class="col-span-full py-20 text-center">
                 <p class="text-slate-500 dark:text-slate-400 text-sm">No products match your search.</p>
-                <button @click="search=''" class="mt-2 text-purple-600 dark:text-purple-400 text-xs font-semibold hover:underline">Clear search</button>
+                <button @click="search=''" class="mt-2 text-rose-600 dark:text-pink-400 text-xs font-semibold hover:underline">Clear search</button>
             </div>
         </div>
 
@@ -351,10 +351,10 @@
                  <div class="mb-6 pr-10">
                      <h3 class="font-extrabold text-slate-900 dark:text-white text-2xl mb-1">Secure Checkout</h3>
                      <template x-if="checkoutMode === 'cart'">
-                         <p class="text-slate-500 dark:text-slate-400 text-sm">You are checking out <strong class="text-purple-600 dark:text-[#f0abfc] font-semibold" x-text="$store.cart.count + ' items'"></strong> for <strong class="text-slate-900 dark:text-white" x-text="'Br ' + $store.cart.total.toFixed(2)"></strong>.</p>
+                         <p class="text-slate-500 dark:text-slate-400 text-sm">You are checking out <strong class="text-rose-600 dark:text-pink-300 font-semibold" x-text="$store.cart.count + ' items'"></strong> for <strong class="text-slate-900 dark:text-white" x-text="'Br ' + $store.cart.total.toFixed(2)"></strong>.</p>
                      </template>
                      <template x-if="checkoutMode === 'single'">
-                         <p class="text-slate-500 dark:text-slate-400 text-sm">You are ordering <strong class="text-purple-600 dark:text-[#f0abfc] font-semibold" x-text="checkoutProduct?.name"></strong>.</p>
+                         <p class="text-slate-500 dark:text-slate-400 text-sm">You are ordering <strong class="text-rose-600 dark:text-pink-300 font-semibold" x-text="checkoutProduct?.name"></strong>.</p>
                      </template>
                  </div>
 
@@ -429,14 +429,15 @@
         </div>
     </div>
 
-    <!-- Floating Action Button for Custom Order -->
+    <!-- Floating Action Button for Custom Order — Brand Colors -->
     <button @click="openContactModal()" 
-            class="fixed bottom-6 left-6 z-50 px-5 py-3 rounded-full flex items-center gap-2.5 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all group font-semibold text-xs sm:text-sm bg-slate-900/80 dark:bg-white/10 backdrop-blur-xl border border-white/15 hover:bg-slate-900 dark:hover:bg-white/20" 
+            class="fixed bottom-6 left-6 z-50 px-5 py-3.5 rounded-full flex items-center gap-2.5 text-white shadow-2xl hover:scale-105 active:scale-95 transition-all group font-bold text-xs sm:text-sm glow-gradient border border-white/25 cursor-pointer" 
+            style="background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%) !important; box-shadow: 0 4px 20px rgba(193, 28, 106, 0.45);"
             title="Custom Order">
-        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-rose-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
         </svg>
-        <span class="tracking-wide">Custom Order</span>
+        <span class="tracking-wide text-white font-bold">Custom Order</span>
     </button>
 
     <!-- Custom Order Modal -->

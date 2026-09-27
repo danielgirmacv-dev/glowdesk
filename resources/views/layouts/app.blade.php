@@ -139,6 +139,17 @@
         }
 
 
+        /* Beauty tagline explicit black in day mode, white in dark mode */
+        .beauty-tagline {
+            color: #000000;
+        }
+        html.dark .beauty-tagline {
+            color: #ffffff !important;
+        }
+        html.light-mode .beauty-tagline, html:not(.dark) .beauty-tagline {
+            color: #000000 !important;
+        }
+
         /* GlowAddis Brand Gradients — Pink → Deep Magenta/Rose */
         .glow-gradient {
             background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%);
@@ -465,7 +476,7 @@
                             <div class="cart-header p-3 sm:p-4 border-b">
                                 <h3 class="font-bold uppercase tracking-wider text-xs sm:text-sm flex justify-between items-center text-slate-900 dark:text-white">
                                     Your Cart
-                                    <span class="text-purple-700 dark:text-purple-300 text-xs bg-purple-100 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/40 px-2 py-0.5 rounded-full font-semibold" x-text="$store.cart.count + ' items'"></span>
+                                    <span class="text-rose-700 dark:text-pink-300 text-xs bg-pink-100 dark:bg-pink-950/60 border border-pink-200 dark:border-pink-800/40 px-2 py-0.5 rounded-full font-semibold" x-text="$store.cart.count + ' items'"></span>
                                 </h3>
                             </div>
                             
@@ -498,7 +509,7 @@
                                 <div class="cart-footer p-4 sm:p-5 border-t space-y-3">
                                     <div class="flex justify-between items-center font-bold text-slate-900 dark:text-white mb-2">
                                         <span class="text-slate-500 text-sm">Total</span>
-                                        <span class="text-purple-600 dark:text-purple-300 text-xl" x-text="'Br ' + $store.cart.total.toFixed(2)"></span>
+                                        <span class="text-rose-600 dark:text-pink-400 text-xl font-extrabold" x-text="'Br ' + $store.cart.total.toFixed(2)"></span>
                                     </div>
                                     <button @click="window.dispatchEvent(new CustomEvent('open-cart-checkout')); $dispatch('open-cart-checkout'); $store.cart.open = false" class="w-full btn-glow py-3 rounded-xl font-bold transition-all shadow-sm">
                                         Proceed to Checkout
@@ -653,9 +664,9 @@
                 <template x-if="isLoading">
                     <div class="flex justify-start">
                         <div class="chat-model-msg rounded-tr-xl rounded-b-xl px-4 py-3 text-sm flex gap-1.5 items-center">
-                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-purple-600 rounded-full"></span>
-                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-purple-600 rounded-full" style="animation-delay: 0.2s"></span>
-                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-purple-600 rounded-full" style="animation-delay: 0.4s"></span>
+                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-rose-600 rounded-full"></span>
+                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-rose-600 rounded-full" style="animation-delay: 0.2s"></span>
+                            <span class="animate-bounce inline-block w-1.5 h-1.5 bg-rose-600 rounded-full" style="animation-delay: 0.4s"></span>
                         </div>
                     </div>
                 </template>
@@ -670,30 +681,32 @@
             
             <!-- Explicit Alternative UI Button for Custom Order -->
             <div class="chat-custom-req-bar px-4 py-2.5 border-t flex items-center justify-center">
-                <button type="button" @click="$dispatch('open-custom-request'); open = false; isMaximized = false" class="w-full py-2 bg-purple-50 dark:bg-white/5 hover:bg-purple-100 dark:hover:bg-white/10 border border-purple-200 dark:border-white/10 rounded-xl text-purple-700 dark:text-purple-300 text-[11px] font-semibold flex items-center justify-center gap-2 transition">
+                <button type="button" @click="$dispatch('open-custom-request'); open = false; isMaximized = false" class="w-full py-2 bg-pink-50 dark:bg-white/5 hover:bg-pink-100 dark:hover:bg-white/10 border border-pink-200 dark:border-white/10 rounded-xl text-rose-700 dark:text-rose-300 text-[11px] font-semibold flex items-center justify-center gap-2 transition">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Product not listed? Request a Custom Order!
                 </button>
             </div>
             
             <!-- Input Area -->
             <form @submit.prevent="send()" class="chat-input-bar p-3 border-t flex gap-2 items-center">
-                <input x-model="input" type="text" placeholder="Ask GlowBot..." class="chat-input-field flex-1 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-600 transition">
+                <input x-model="input" type="text" placeholder="Ask GlowBot..." class="chat-input-field flex-1 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-rose-500 transition">
                 <button type="submit" :disabled="isLoading || !input.trim()" class="btn-glow disabled:opacity-40 disabled:cursor-not-allowed !text-white w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-xl transition shadow-xs">
                     <svg class="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                 </button>
             </form>
         </div>
         
-        <!-- Floating FAB -->
+        <!-- Floating FAB — GlowAddis Brand Colors -->
         <button @click="open = !open; if(open) hasUnread = false" 
-                class="relative w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-105 transition-all z-[101] group">
+                class="relative w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all z-[101] group cursor-pointer glow-gradient"
+                style="background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%) !important; box-shadow: 0 4px 20px rgba(193, 28, 106, 0.55);"
+                aria-label="Open Chatbot">
             <!-- Ring pulse -->
-            <span class="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 animate-ping opacity-20 group-hover:opacity-30"></span>
+            <span class="absolute inset-0 rounded-full animate-ping opacity-30 pointer-events-none" style="background: linear-gradient(135deg, #f472b6, #c11c6a);"></span>
             <!-- Solid circle -->
-            <span class="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 shadow-lg"></span>
-            <svg x-show="!open" class="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-            <svg x-show="open" x-cloak class="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            <span x-show="hasUnread && !open" class="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-[#0d0d12] shadow-sm z-10"></span>
+            <span class="absolute inset-0 rounded-full shadow-lg glow-gradient pointer-events-none" style="background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%);"></span>
+            <svg x-show="!open" class="w-6 h-6 relative z-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+            <svg x-show="open" x-cloak class="w-6 h-6 relative z-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span x-show="hasUnread && !open" class="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-[#0d0a0c] shadow-sm z-10"></span>
         </button>
     </div>
 
