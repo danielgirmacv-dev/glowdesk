@@ -354,10 +354,10 @@
         <div x-show="showCheckoutModal"
              x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0"
              x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative w-full max-w-lg bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl overflow-hidden shadow-2xl flex flex-col z-10 border border-slate-200/80 dark:border-white/10">
+             class="relative w-full max-w-lg bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl shadow-2xl flex flex-col z-10 max-h-[90vh] border border-slate-200/80 dark:border-white/10">
              
-             <div class="p-6 md:p-8 relative">
-                 <button type="button" @click="showCheckoutModal = false" class="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:hover:text-white transition border border-slate-200/60 dark:border-white/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+             <div class="p-6 md:p-8 relative overflow-y-auto custom-scrollbar">
+                 <button type="button" @click="showCheckoutModal = false" class="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:hover:text-white transition border border-slate-200/60 dark:border-white/10 z-[201]"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
                  
                  <div class="mb-6 pr-10">
                      <h3 class="font-extrabold text-slate-900 dark:text-white text-2xl mb-1">Secure Checkout</h3>
@@ -462,10 +462,10 @@
         <div x-show="showContactModal"
              x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0"
              x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-             class="relative w-full max-w-lg bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-200/80 dark:border-white/10">
+             class="relative w-full max-w-lg bg-white dark:bg-[#13131c] text-slate-900 dark:text-white rounded-3xl shadow-2xl flex flex-col max-h-[90vh] border border-slate-200/80 dark:border-white/10">
              
-             <div class="p-6 md:p-8 relative">
-                 <button @click="showContactModal = false; document.body.style.overflow = '';" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:hover:text-white transition bg-slate-100 dark:bg-white/10 rounded-full p-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+             <div class="p-6 md:p-8 relative overflow-y-auto custom-scrollbar">
+                 <button @click="showContactModal = false; document.body.style.overflow = '';" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:hover:text-white transition bg-slate-100 dark:bg-white/10 rounded-full p-2 z-[201]"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
                  
                  <div class="flex items-center gap-3 mb-2">
                      <div class="w-10 h-10 rounded-xl glow-gradient flex items-center justify-center shadow-xs">
