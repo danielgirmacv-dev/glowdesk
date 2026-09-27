@@ -11,15 +11,15 @@
 
     <!-- ===== HERO SLIDESHOW ===== -->
     @if($products->count() > 0)
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-10 mb-4 sm:mb-5">
         <div class="flex flex-col">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h2 class="featured-heading text-2xl sm:text-3xl font-extrabold tracking-tight">
                 Featured Products
             </h2>
             <div class="section-heading-accent"></div>
         </div>
     </div>
-    <div class="relative overflow-hidden min-h-[26rem] sm:h-96 py-8 sm:py-0 mb-0 max-w-7xl mx-auto rounded-3xl hero-slideshow shadow-lg" x-data="slideshow()">
+    <div class="relative overflow-hidden min-h-[30rem] sm:min-h-0 sm:h-96 py-6 sm:py-0 mb-0 max-w-7xl mx-auto rounded-3xl hero-slideshow shadow-xl select-none" x-data="slideshow()">
         <!-- Slides -->
         <template x-for="(product, index) in slides" :key="index">
             <div
@@ -33,28 +33,33 @@
                 class="absolute inset-0 flex items-center">
 
                 <!-- Content -->
-                <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 flex flex-col-reverse sm:flex-row items-center sm:justify-between gap-6 sm:gap-10 w-full">
+                <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-10 flex flex-col-reverse sm:flex-row items-center sm:justify-between gap-4 sm:gap-10 w-full pb-8 sm:pb-0">
                     <!-- Text -->
-                    <div class="flex-1 text-center sm:text-left flex flex-col items-center sm:items-start pt-2 sm:pt-0">
-                        <span class="text-[11px] font-bold text-pink-300 uppercase tracking-[0.15em] mb-2 px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-sm inline-block w-fit" x-text="product.category?.name || 'Skincare'"></span>
-                        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-2 leading-tight tracking-tight" x-text="product.name"></h2>
-                        <p class="text-white/65 text-xs sm:text-sm max-w-md line-clamp-2 mb-5 font-normal leading-relaxed" x-text="product.description"></p>
-                        <div class="flex items-center gap-4">
-                            <span class="text-xl font-bold text-white bg-white/15 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20" x-text="'Br ' + parseFloat(product.price).toFixed(2)"></span>
-                            <div class="flex gap-2">
+                    <div class="flex-1 text-center sm:text-left flex flex-col items-center sm:items-start pt-1 sm:pt-0 max-w-full">
+                        <span class="text-[10px] sm:text-[11px] font-bold text-pink-300 uppercase tracking-[0.15em] mb-1.5 px-2.5 py-0.5 rounded-md bg-white/10 backdrop-blur-sm inline-block w-fit" x-text="product.category?.name || 'Skincare'"></span>
+                        <h2 class="text-lg sm:text-3xl lg:text-4xl font-extrabold text-white mb-1.5 sm:mb-2 leading-snug tracking-tight px-6 sm:px-0 line-clamp-2" x-text="product.name"></h2>
+                        <p class="text-white/70 text-xs sm:text-sm max-w-md line-clamp-2 mb-3.5 sm:mb-5 font-normal leading-relaxed px-2 sm:px-0" x-text="product.description"></p>
+                        
+                        <!-- Price + Actions Row (Fully Responsive) -->
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3 w-full sm:w-auto">
+                            <!-- Birr Price Pill -->
+                            <span class="text-sm sm:text-lg font-black text-white bg-white/20 backdrop-blur-md px-3 py-2 sm:px-4 sm:py-2 rounded-xl border border-white/25 shadow-sm whitespace-nowrap" x-text="'Br ' + parseFloat(product.price).toFixed(2)"></span>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex items-center gap-2">
                                 <button @click="$store.cart.add(product)"
-                                    class="text-[12px] font-bold px-3.5 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-95 border backdrop-blur-sm"
-                                    :class="$store.cart.items.some(i => i.id === product.id) ? 'bg-emerald-500/20 border-emerald-400/40 text-emerald-300' : 'bg-white/10 border-white/25 text-white hover:bg-white/20'">
+                                    class="text-xs sm:text-[12px] font-bold px-3 sm:px-3.5 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-95 border backdrop-blur-sm shadow-xs"
+                                    :class="$store.cart.items.some(i => i.id === product.id) ? 'bg-emerald-500/25 border-emerald-400/50 text-emerald-200' : 'bg-white/15 border-white/25 text-white hover:bg-white/25'">
                                     <template x-if="$store.cart.items.some(i => i.id === product.id)">
-                                        <span><svg class="w-3.5 h-3.5 inline text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> In Cart</span>
+                                        <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5 inline text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> In Cart</span>
                                     </template>
                                     <template x-if="!$store.cart.items.some(i => i.id === product.id)">
-                                        <span><svg class="w-3.5 h-3.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Cart</span>
+                                        <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Cart</span>
                                     </template>
                                 </button>
                                 <button @click="openCheckout('single', product)"
-                                    class="bg-white hover:bg-white/90 shadow-md text-slate-900 text-[12px] font-bold px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-95">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                    class="bg-white hover:bg-white/95 shadow-md text-slate-900 text-xs sm:text-[12px] font-bold px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-95">
+                                    <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                                     Order Now
                                 </button>
                             </div>
@@ -63,8 +68,8 @@
 
                     <!-- Product image on mobile top, desktop right -->
                     <template x-if="product.image_url">
-                        <div class="flex-shrink-0 w-48 h-40 sm:w-72 sm:h-56 rounded-2xl overflow-hidden bg-white/10 backdrop-blur-sm border border-white/15 shadow-lg transition-transform duration-300 hover:scale-[1.03]">
-                            <img :src="product.image_url" :alt="product.name" class="object-cover w-full h-full">
+                        <div class="flex-shrink-0 w-36 h-36 sm:w-72 sm:h-56 rounded-2xl overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg transition-transform duration-300 hover:scale-[1.03] p-1 flex items-center justify-center">
+                            <img :src="product.image_url" :alt="product.name" class="object-contain w-full h-full rounded-xl">
                         </div>
                     </template>
                 </div>
@@ -72,20 +77,20 @@
         </template>
 
         <!-- Dot indicators -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        <div class="absolute bottom-2.5 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-20">
             <template x-for="(_, i) in slides" :key="i">
                 <button @click="current = i; resetTimer()"
                     class="h-1.5 rounded-full transition-all duration-300"
-                    :class="current === i ? 'w-7 bg-white' : 'w-1.5 bg-white/35 hover:bg-white/55'"></button>
+                    :class="current === i ? 'w-6 sm:w-7 bg-white' : 'w-1.5 bg-white/35 hover:bg-white/55'"></button>
             </template>
         </div>
 
-        <!-- Prev/Next arrows -->
-        <button @click="prev()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white/80 hover:text-white transition shadow-sm flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <!-- Prev/Next arrows: positioned over the image area on mobile, centered vertically on desktop -->
+        <button @click="prev()" aria-label="Previous Slide" class="absolute left-2.5 sm:left-4 top-20 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full sm:rounded-xl border border-white/20 bg-black/20 sm:bg-white/10 backdrop-blur-md hover:bg-white/25 text-white/90 hover:text-white transition shadow-sm flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button @click="next()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white/80 hover:text-white transition shadow-sm flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <button @click="next()" aria-label="Next Slide" class="absolute right-2.5 sm:right-4 top-20 sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full sm:rounded-xl border border-white/20 bg-black/20 sm:bg-white/10 backdrop-blur-md hover:bg-white/25 text-white/90 hover:text-white transition shadow-sm flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
         </button>
     </div>
     @endif

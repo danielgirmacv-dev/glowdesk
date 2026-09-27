@@ -153,6 +153,17 @@
             color: #000000 !important;
         }
 
+        /* Featured Products heading high contrast */
+        .featured-heading {
+            color: #0f172a;
+        }
+        html.dark .featured-heading {
+            color: #ffffff !important;
+        }
+        html.light-mode .featured-heading, html:not(.dark) .featured-heading {
+            color: #0f172a !important;
+        }
+
         /* GlowAddis Brand Gradients — Pink → Deep Magenta/Rose */
         .glow-gradient {
             background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%);
