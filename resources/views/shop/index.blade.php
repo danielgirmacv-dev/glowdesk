@@ -186,26 +186,32 @@
                         <h3 class="font-semibold text-sm text-slate-900 dark:text-white leading-tight mb-1 line-clamp-2" x-text="product.name"></h3>
                         <p class="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed flex-grow line-clamp-2 mb-3 font-normal" x-text="product.description"></p>
                         <template x-if="product.is_active">
-                            <div class="flex gap-1.5">
+                            <div class="flex gap-1.5 items-stretch">
                                 <button @click="$store.cart.add(product)" title="Add to Cart"
-                                    class="flex-1 font-bold py-1.5 rounded-xl flex items-center justify-center gap-1 transition-all text-xs relative"
-                                    :class="$store.cart.items.some(i => i.id === product.id) ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-700 dark:text-emerald-400' : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/15 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-white/10 shadow-xs'">
+                                    class="flex-1 font-bold py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all text-xs relative cursor-pointer active:scale-95"
+                                    :class="$store.cart.items.some(i => i.id === product.id) 
+                                        ? 'bg-emerald-500 text-white shadow-xs' 
+                                        : 'bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 dark:bg-white/10 dark:hover:bg-white/15 dark:border-white/15 dark:text-pink-300 shadow-xs'">
                                     
                                     <template x-if="$store.cart.items.some(i => i.id === product.id)">
-                                        <div class="flex items-center gap-1">
+                                        <div class="flex items-center gap-1 font-bold">
                                             <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                            <span class="text-[11px]">Added</span>
                                             <template x-if="$store.cart.items.find(i => i.id === product.id).quantity > 1">
-                                                <span x-text="$store.cart.items.find(i => i.id === product.id).quantity" class="absolute -top-1.5 -right-1.5 bg-rose-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-xs"></span>
+                                                <span x-text="$store.cart.items.find(i => i.id === product.id).quantity" class="absolute -top-1.5 -right-1.5 bg-rose-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-xs"></span>
                                             </template>
                                         </div>
                                     </template>
                                     
                                     <template x-if="!$store.cart.items.some(i => i.id === product.id)">
-                                        <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                        <div class="flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5 stroke-[2.2] text-rose-600 dark:text-pink-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                            <span class="text-[11px] font-bold text-rose-700 dark:text-pink-300">Cart</span>
+                                        </div>
                                     </template>
                                 </button>
                                 <button @click="openCheckout('single', product)"
-                                    class="flex-[2] btn-glow text-white text-xs font-semibold py-2 rounded-xl flex items-center justify-center transition-all">
+                                    class="flex-[1.8] btn-glow text-white text-xs font-semibold py-2 rounded-xl flex items-center justify-center transition-all">
                                     Order Now
                                 </button>
                             </div>

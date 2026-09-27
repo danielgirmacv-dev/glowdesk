@@ -184,6 +184,22 @@
             box-shadow: 0 22px 44px -8px rgba(193, 28, 106, 0.18);
         }
 
+        /* Day Mode Card & Text Explicit High-Contrast Styling */
+        html:not(.dark) .card-hover,
+        html.light-mode .card-hover {
+            background: #ffffff !important;
+            border-color: #fce7f3 !important;
+            box-shadow: 0 4px 18px rgba(193, 28, 106, 0.08) !important;
+        }
+        html:not(.dark) .card-hover h3,
+        html.light-mode .card-hover h3 {
+            color: #0f172a !important;
+        }
+        html:not(.dark) .card-hover p,
+        html.light-mode .card-hover p {
+            color: #475569 !important;
+        }
+
         /* Premium gradient button — GlowAddis Brand */
         .btn-glow {
             background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%);
@@ -244,6 +260,10 @@
         nav.glass-dark .text-slate-400 { color: #64748b; }
         nav.glass-dark .text-slate-400:hover { color: #0f172a; }
         nav.glass-dark .text-white { color: #0f172a; }
+        nav.glass-dark .nav-cart-btn { color: #0f172a !important; }
+        nav.glass-dark .nav-cart-btn:hover { color: #c11c6a !important; }
+        html.dark nav.glass-dark .nav-cart-btn { color: #f1e8ed !important; }
+        html.dark nav.glass-dark .nav-cart-btn:hover { color: #ffffff !important; }
 
         .cart-dropdown {
             background: #ffffff;
@@ -462,7 +482,7 @@
                 <div class="flex items-center gap-2">
                     <!-- Shopping Cart -->
                     <div class="relative z-50 flex items-center mr-2" x-data @keydown.escape.window="$store.cart.open = false">
-                        <button @click="$store.cart.open = !$store.cart.open" class="relative p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                        <button @click="$store.cart.open = !$store.cart.open" class="relative p-2 nav-cart-btn text-slate-900 dark:text-slate-200 hover:text-rose-600 dark:hover:text-rose-400 transition-colors flex items-center">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                             <span class="hidden sm:inline font-bold ml-1 text-sm">Cart</span>
                             <span x-show="$store.cart.count > 0" x-transition x-text="$store.cart.count" class="absolute top-0 right-0 sm:right-6 -mt-1 -mr-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-[#0d0d12] shadow-md"></span>
