@@ -63,8 +63,8 @@
 
             if (window.Telegram && window.Telegram.WebApp) {
                 try {
-                    window.Telegram.WebApp.setHeaderColor(nextTheme === 'light' ? '#faf8fc' : '#0d0d12');
-                    window.Telegram.WebApp.setBackgroundColor(nextTheme === 'light' ? '#faf8fc' : '#0d0d12');
+                    window.Telegram.WebApp.setHeaderColor(nextTheme === 'light' ? '#fdf0f5' : '#0d0a0c');
+                    window.Telegram.WebApp.setBackgroundColor(nextTheme === 'light' ? '#fdf0f5' : '#0d0a0c');
                 } catch(e) {}
             }
         };
@@ -79,16 +79,16 @@
                 extend: {
                     colors: {
                         glow: {
-                            50:  '#fdf4ff',
-                            100: '#fae8ff',
-                            200: '#f5d0fe',
-                            300: '#f0abfc',
-                            400: '#e879f9',
-                            500: '#d946ef',
-                            600: '#c026d3',
-                            700: '#a21caf',
-                            800: '#86198f',
-                            900: '#701a75',
+                            50:  '#fff0f5',
+                            100: '#ffe0ed',
+                            200: '#ffc0d9',
+                            300: '#ff90bb',
+                            400: '#f4649a',
+                            500: '#e83c7c',
+                            600: '#c91a5c',
+                            700: '#a81048',
+                            800: '#8b0a3d',
+                            900: '#6e0830',
                         }
                     },
                     fontFamily: {
@@ -106,45 +106,45 @@
     <style>
         [x-cloak] { display: none !important; }
 
-        /* ─── Base Theme ─────────────────────────────────────────── */
+        /* ─── Base Theme (GlowAddis Brand: Pink/Rose/Magenta) ──────── */
         html {
-            background-color: #f3f0f8;   /* warm lavender page bg — NOT plain white */
+            background-color: #fdf0f5;   /* soft rose page bg */
             color-scheme: light;
             transition: background-color 0.2s ease;
             min-height: 100%;
         }
         html.dark {
-            background-color: #0d0d12;
+            background-color: #0d0a0c;
             color-scheme: dark;
         }
 
         body {
             background-color: inherit;
-            color: #0f172a;
+            color: #1a0a10;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         html.dark body {
-            color: #f1f5f9 !important;
+            color: #f1e8ed !important;
         }
 
         /* Global dark mode text fallback */
         html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
-            color: #f1f5f9;
+            color: #f9e8f0;
         }
         html.dark p:not([class*="text-"]), html.dark span:not([class*="text-"]), html.dark label:not([class*="text-"]) {
             color: inherit;
         }
 
 
-        /* Clean, controlled gradients */
+        /* GlowAddis Brand Gradients — Pink → Deep Magenta/Rose */
         .glow-gradient {
-            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%);
         }
         .glow-text {
-            background: linear-gradient(135deg, #a21caf, #6366f1);
+            background: linear-gradient(135deg, #c11c6a, #e83c7c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -154,8 +154,8 @@
         .glass {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.12);
-            box-shadow: 0 2px 8px rgba(109, 40, 217, 0.06);
+            border: 1px solid rgba(193, 28, 106, 0.12);
+            box-shadow: 0 2px 8px rgba(193, 28, 106, 0.06);
         }
         .glass-dark {
             background: #ffffff;
@@ -170,52 +170,52 @@
         }
         .card-hover:hover {
             transform: translateY(-5px) scale(1.015);
-            box-shadow: 0 22px 44px -8px rgba(109, 40, 217, 0.15);
+            box-shadow: 0 22px 44px -8px rgba(193, 28, 106, 0.18);
         }
 
-        /* Premium gradient button */
+        /* Premium gradient button — GlowAddis Brand */
         .btn-glow {
-            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 55%, #a21caf 100%);
+            background: linear-gradient(135deg, #f472b6 0%, #c11c6a 55%, #8b0a3d 100%);
             background-size: 200% 200%;
             background-position: 0% 50%;
             color: #ffffff !important;
-            box-shadow: 0 2px 10px rgba(124, 58, 237, 0.28);
+            box-shadow: 0 2px 10px rgba(193, 28, 106, 0.35);
             transition: all 0.22s ease;
         }
         .btn-glow:hover {
-            box-shadow: 0 6px 22px rgba(124, 58, 237, 0.48);
+            box-shadow: 0 6px 22px rgba(193, 28, 106, 0.55);
             transform: translateY(-1px);
             background-position: 100% 50%;
         }
         .btn-glow:active {
             transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 2px 8px rgba(193, 28, 106, 0.28);
         }
 
-        /* Crisp input fields */
+        /* Crisp input fields — GlowAddis Pink Border */
         .input-field {
             background: #ffffff;
-            border: 1.5px solid #d8b4fe;   /* soft purple border */
-            color: #0f172a;
+            border: 1.5px solid #fbcfe8;   /* soft rose/pink border */
+            color: #1a0a10;
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
         .input-field:focus {
             outline: none;
-            border-color: #a21caf;
-            box-shadow: 0 0 0 3px rgba(162, 28, 175, 0.15);
+            border-color: #c11c6a;
+            box-shadow: 0 0 0 3px rgba(193, 28, 106, 0.15);
         }
-        .input-field::placeholder { color: #64748b; }
+        .input-field::placeholder { color: #9d6878; }
 
         select.input-field option {
             background: #ffffff;
-            color: #0f172a;
+            color: #1a0a10;
         }
 
-        /* Subtle scrollbar */
+        /* Subtle scrollbar — rose/pink tint */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 9999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
+        ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c11c6a; }
 
         /* Keep white text on gradient elements ONLY */
         .btn-glow, .glow-gradient, .btn-glow *, .glow-gradient * {
@@ -226,8 +226,8 @@
         nav.glass-dark {
             background: #ffffff;
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid #ede9fe;  /* visible lavender border */
-            box-shadow: 0 2px 12px rgba(109, 40, 217, 0.07);
+            border-bottom: 1px solid #fce7f3;  /* visible rose/pink border */
+            box-shadow: 0 2px 12px rgba(193, 28, 106, 0.08);
         }
 
         nav.glass-dark .text-slate-400 { color: #64748b; }
@@ -257,7 +257,7 @@
             border-color: rgba(0, 0, 0, 0.06);
         }
         .chat-header h3 { color: #0f172a; }
-        .chat-messages { background: #faf8fc; }
+        .chat-messages { background: #fdf5f8; }
         .chat-model-msg {
             background: #ffffff;
             color: #1e293b;
@@ -269,12 +269,12 @@
             border-color: rgba(0, 0, 0, 0.06);
         }
         .chat-chips button {
-            background: #f3f0f7;
-            color: #7c3aed;
-            border: 1px solid rgba(124, 58, 237, 0.15);
+            background: #fff0f5;
+            color: #c11c6a;
+            border: 1px solid rgba(193, 28, 106, 0.18);
         }
         .chat-chips button:hover {
-            background: #ede9fe;
+            background: #fce7f3;
         }
         .chat-input-field {
             background: #f8fafc;
@@ -287,27 +287,27 @@
            ======================================================== */
 
         html.dark ::-webkit-scrollbar-thumb {
-            background: #334155;
+            background: #8b0a3d;
         }
         html.dark .glow-text {
-            background: linear-gradient(135deg, #f0abfc, #a5b4fc);
+            background: linear-gradient(135deg, #f9a8d4, #f472b6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         html.dark .glass {
-            background: rgba(22, 22, 30, 0.75) !important;
+            background: rgba(26, 10, 18, 0.75) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         html.dark .glass-dark {
-            background: rgba(18, 18, 26, 0.85) !important;
+            background: rgba(20, 7, 14, 0.85) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
         }
         html.dark .card-hover,
         .dark .card-hover {
-            background: #14141e !important;
+            background: #1a070e !important;
             border-color: rgba(255, 255, 255, 0.08) !important;
         }
         html.dark .card-hover h3,
@@ -316,10 +316,10 @@
         }
         html.dark .card-hover p,
         .dark .card-hover p {
-            color: #94a3b8 !important;
+            color: #e8a0b4 !important;
         }
         html.dark .card-hover:hover {
-            box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(124, 58, 237, 0.15) !important;
+            box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(193, 28, 106, 0.2) !important;
         }
         html.dark .input-field {
             background: rgba(255, 255, 255, 0.05) !important;
@@ -328,14 +328,14 @@
         }
         html.dark .input-field:focus {
             background: rgba(255, 255, 255, 0.08) !important;
-            border-color: #c026d3 !important;
-            box-shadow: 0 0 0 3px rgba(192, 38, 211, 0.2) !important;
+            border-color: #f472b6 !important;
+            box-shadow: 0 0 0 3px rgba(193, 28, 106, 0.22) !important;
         }
         html.dark .input-field::placeholder { color: #64748b !important; }
 
         html.dark nav.glass-dark {
-            background: rgba(13, 13, 18, 0.82) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            background: rgba(13, 7, 10, 0.88) !important;
+            border-bottom: 1px solid rgba(193, 28, 106, 0.18) !important;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
         }
         html.dark nav.glass-dark .text-white { color: #ffffff !important; }
@@ -343,59 +343,59 @@
         html.dark nav.glass-dark .text-slate-400:hover { color: #ffffff !important; }
 
         html.dark .cart-dropdown {
-            background: #14141e !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: #1a070e !important;
+            border: 1px solid rgba(193, 28, 106, 0.2) !important;
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
         }
         html.dark .cart-dropdown .cart-header,
         html.dark .cart-dropdown .cart-footer {
-            background: #191926 !important;
-            border-color: rgba(255, 255, 255, 0.06) !important;
+            background: #220a13 !important;
+            border-color: rgba(193, 28, 106, 0.12) !important;
         }
-        html.dark .cart-dropdown .cart-header h3 { color: #ffffff !important; }
-        html.dark .cart-dropdown .cart-item-name { color: #f1f5f9 !important; }
+        html.dark .cart-dropdown .cart-header h3 { color: #fdf2f8 !important; }
+        html.dark .cart-dropdown .cart-item-name { color: #fce7f3 !important; }
 
         html.dark .chat-window {
-            background: #14141e !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: #1a070e !important;
+            border: 1px solid rgba(193, 28, 106, 0.2) !important;
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
         }
         html.dark .chat-header {
-            background: #191926 !important;
-            border-color: rgba(255, 255, 255, 0.06) !important;
+            background: #220a13 !important;
+            border-color: rgba(193, 28, 106, 0.12) !important;
         }
-        html.dark .chat-header h3 { color: #ffffff !important; }
-        html.dark .chat-messages { background: #0f0f16 !important; }
+        html.dark .chat-header h3 { color: #fdf2f8 !important; }
+        html.dark .chat-messages { background: #130509 !important; }
         html.dark .chat-model-msg {
-            background: #191926 !important;
-            color: #e2e8f0 !important;
-            border: 1px solid rgba(255, 255, 255, 0.07) !important;
+            background: #220a13 !important;
+            color: #fce7f3 !important;
+            border: 1px solid rgba(193, 28, 106, 0.12) !important;
         }
         html.dark .chat-chips, html.dark .chat-custom-req-bar, html.dark .chat-input-bar {
-            background: #14141e !important;
-            border-color: rgba(255, 255, 255, 0.06) !important;
+            background: #1a070e !important;
+            border-color: rgba(193, 28, 106, 0.1) !important;
         }
         html.dark .chat-chips button {
-            background: rgba(255, 255, 255, 0.06) !important;
-            color: #d8b4fe !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: rgba(193, 28, 106, 0.1) !important;
+            color: #f9a8d4 !important;
+            border: 1px solid rgba(193, 28, 106, 0.2) !important;
         }
         html.dark .chat-chips button:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
+            background: rgba(193, 28, 106, 0.2) !important;
         }
         html.dark .chat-input-field {
             background: rgba(255, 255, 255, 0.05) !important;
-            color: #ffffff !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #fce7f3 !important;
+            border-color: rgba(193, 28, 106, 0.2) !important;
         }
 
         /* ═══════════════════════════════════════════
            MODERNIZATION v2 — New Component Styles
            ═══════════════════════════════════════════ */
 
-        /* Hero slideshow — rich purple gradient, works in any theme */
+        /* Hero slideshow — GlowAddis deep rose/magenta gradient */
         .hero-slideshow {
-            background: linear-gradient(135deg, #3b0764 0%, #4c1d95 30%, #312e81 65%, #6b21a8 100%);
+            background: linear-gradient(135deg, #4a0020 0%, #7d0a3c 30%, #c11c6a 65%, #f472b6 100%);
         }
 
         /* Product card glass overlay — bottom fade */
@@ -405,9 +405,9 @@
 
         /* Category / sort chip — active glowing state */
         .chip-active {
-            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #f472b6 0%, #c11c6a 100%);
             color: #ffffff !important;
-            box-shadow: 0 2px 16px rgba(124, 58, 237, 0.45);
+            box-shadow: 0 2px 16px rgba(193, 28, 106, 0.5);
             border-color: transparent !important;
         }
 
@@ -415,13 +415,13 @@
         .sort-glass {
             background: #ffffff;
             backdrop-filter: blur(14px);
-            border: 1.5px solid #e9d5ff;   /* visible purple border */
+            border: 1.5px solid #fce7f3;   /* visible rose border */
             border-radius: 1rem;
-            box-shadow: 0 2px 14px rgba(109, 40, 217, 0.07);
+            box-shadow: 0 2px 14px rgba(193, 28, 106, 0.08);
         }
         html.dark .sort-glass {
-            background: rgba(18, 18, 26, 0.82);
-            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            background: rgba(26, 7, 14, 0.82);
+            border: 1.5px solid rgba(193, 28, 106, 0.18);
             box-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
         }
 
@@ -430,7 +430,7 @@
         .section-heading-accent {
             width: 2.5rem;
             height: 3px;
-            background: linear-gradient(90deg, #c026d3, #7c3aed);
+            background: linear-gradient(90deg, #f472b6, #c11c6a);
             border-radius: 9999px;
             margin-top: 0.35rem;
         }
@@ -443,15 +443,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <!-- Logo -->
-                <a href="{{ route('shop.index') }}" class="flex items-center gap-3 group">
-                    <div class="w-9 h-9 rounded-xl glow-gradient flex items-center justify-center shadow-sm">
-                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2s-4 2-4 8c0 4 4 12 4 12s4-8 4-12c0-6-4-8-4-8z"/>
-                            <path d="M14 4s4 4 4 8c0 3-2 6-6 10"/>
-                            <path d="M10 4s-4 4-4 8c0 3 2 6 6 10"/>
-                        </svg>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight glow-text">GlowAddis</span>
+                <a href="{{ route('shop.index') }}" class="flex items-center gap-2 group">
+                    <img src="/glowaddis-logo.png" alt="GlowAddis" class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105" style="max-width:120px;">
                 </a>
 
                 <!-- Nav links -->
@@ -616,14 +609,7 @@
                     timer = setTimeout(() => clicks = 0, 2000);
                     if (clicks >= 3) { window.location.href = '{{ route('admin.dashboard') }}'; }
                  ">
-                <div class="w-6 h-6 rounded-lg glow-gradient flex items-center justify-center shadow-sm">
-                    <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2s-4 2-4 8c0 4 4 12 4 12s4-8 4-12c0-6-4-8-4-8z"/>
-                        <path d="M14 4s4 4 4 8c0 3-2 6-6 10"/>
-                        <path d="M10 4s-4 4-4 8c0 3 2 6 6 10"/>
-                    </svg>
-                </div>
-                <span class="text-sm font-semibold glow-text">GlowAddis</span>
+                <img src="/glowaddis-logo.png" alt="GlowAddis" class="h-8 w-auto object-contain" style="max-width:110px;">
             </div>
             <p class="text-xs text-slate-500">&copy; {{ date('Y') }} GlowAddis. All rights reserved.</p>
         </div>
@@ -643,8 +629,8 @@
                         <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-[#0d0d12] rounded-full"></span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-sm flex items-center gap-2">GlowBot <span class="bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider">AI</span></h3>
-                        <p class="text-[10px] text-purple-600 dark:text-purple-400 font-medium">Online | Ready to assist</p>
+                        <h3 class="font-bold text-sm flex items-center gap-2">GlowBot <span class="bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800/40 text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider">AI</span></h3>
+                        <p class="text-[10px] text-rose-600 dark:text-rose-400 font-medium">Online | Ready to assist</p>
                     </div>
                 </div>
                 <div class="flex gap-1">
@@ -749,8 +735,8 @@
                     if (window.Telegram && window.Telegram.WebApp) {
                         const tg = window.Telegram.WebApp;
                         try {
-                            if (tg.setHeaderColor) tg.setHeaderColor(isLight ? '#faf8fc' : '#0d0d12');
-                            if (tg.setBackgroundColor) tg.setBackgroundColor(isLight ? '#faf8fc' : '#0d0d12');
+                            if (tg.setHeaderColor) tg.setHeaderColor(isLight ? '#fdf0f5' : '#0d0a0c');
+                            if (tg.setBackgroundColor) tg.setBackgroundColor(isLight ? '#fdf0f5' : '#0d0a0c');
                         } catch(e) {}
                     }
                 }
@@ -896,8 +882,8 @@
                             if (tg.setHeaderColor) {
                                 try {
                                     const isLight = Alpine.store('theme').current === 'light';
-                                    tg.setHeaderColor(isLight ? '#faf8fc' : '#0d0d12');
-                                    tg.setBackgroundColor(isLight ? '#faf8fc' : '#0d0d12');
+                                    tg.setHeaderColor(isLight ? '#fdf0f5' : '#0d0a0c');
+                                    tg.setBackgroundColor(isLight ? '#fdf0f5' : '#0d0a0c');
                                 } catch(e) {}
                             }
                         }

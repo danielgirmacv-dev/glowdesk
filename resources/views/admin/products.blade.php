@@ -8,7 +8,7 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <p class="text-purple-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
+            <p class="text-rose-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
             <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Products</h1>
             <p class="text-slate-500 text-sm mt-1">{{ $products->count() }} product{{ $products->count() !== 1 ? 's' : '' }} in store</p>
         </div>
@@ -31,7 +31,7 @@
     <!-- Products Grid -->
     <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         @forelse($products as $product)
-        <div class="bg-white dark:bg-[#14141e] rounded-2xl overflow-hidden card-hover flex flex-col border border-purple-100 dark:border-white/8 shadow-[0_2px_12px_rgba(109,40,217,0.08)] dark:shadow-none" data-product-id="{{ $product->id }}">
+        <div class="bg-white dark:bg-[#14141e] rounded-2xl overflow-hidden card-hover flex flex-col border border-pink-100 dark:border-white/8 shadow-[0_2px_12px_rgba(193,28,106,0.08)] dark:shadow-none" data-product-id="{{ $product->id }}">
             <div class="h-36 bg-gradient-to-br from-glow-900/30 to-slate-900 relative overflow-hidden">
                 @if($product->image_url)
                     <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="object-cover w-full h-full opacity-70">
@@ -52,9 +52,9 @@
                 <h3 class="font-bold text-sm text-slate-900 dark:text-white leading-tight">{{ $product->name }}</h3>
                 <p class="text-slate-600 dark:text-slate-400 text-xs mt-1 line-clamp-2 flex-grow">{{ $product->description }}</p>
                 <div class="mt-4 flex items-center justify-between">
-                    <span class="text-lg font-extrabold text-purple-700 dark:glow-text">Br {{ number_format($product->price, 2) }}</span>
+                    <span class="text-lg font-extrabold text-rose-700 dark:glow-text">Br {{ number_format($product->price, 2) }}</span>
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('admin.products.edit', $product) }}" class="p-2 bg-purple-50 dark:bg-slate-800/50 hover:bg-purple-100 dark:hover:bg-glow-500/20 text-purple-700 dark:text-glow-400 rounded-lg transition-all border border-purple-200 dark:border-slate-700/50" title="Edit">
+                        <a href="{{ route('admin.products.edit', $product) }}" class="p-2 bg-pink-50 dark:bg-slate-800/50 hover:bg-pink-100 dark:hover:bg-glow-500/20 text-rose-700 dark:text-glow-400 rounded-lg transition-all border border-pink-200 dark:border-slate-700/50" title="Edit">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                         </a>
                         <button onclick="deleteProduct({{ $product->id }})" class="p-2 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 rounded-lg transition-all border border-red-200 dark:border-red-500/20" title="Delete">
@@ -82,11 +82,11 @@
             @if($products->onFirstPage())
                 <span class="text-slate-400 dark:text-slate-600 cursor-not-allowed">← Previous</span>
             @else
-                <a href="{{ $products->previousPageUrl() }}" class="text-purple-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">← Previous</a>
+                <a href="{{ $products->previousPageUrl() }}" class="text-rose-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">← Previous</a>
             @endif
 
             @if($products->hasMorePages())
-                <a href="{{ $products->nextPageUrl() }}" class="text-purple-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">Next →</a>
+                <a href="{{ $products->nextPageUrl() }}" class="text-rose-600 dark:text-glow-400 hover:text-purple-900 dark:hover:text-white transition">Next →</a>
             @else
                 <span class="text-slate-400 dark:text-slate-600 cursor-not-allowed">Next →</span>
             @endif
@@ -113,9 +113,9 @@
             </p>
             <form action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
-                <div class="bg-slate-50 dark:bg-white/5 w-full p-6 rounded-xl border border-slate-300 dark:border-white/10 text-center relative cursor-pointer hover:bg-purple-50/50 dark:hover:bg-white/10 transition border-dashed">
+                <div class="bg-slate-50 dark:bg-white/5 w-full p-6 rounded-xl border border-slate-300 dark:border-white/10 text-center relative cursor-pointer hover:bg-pink-50/50 dark:hover:bg-white/10 transition border-dashed">
                     <input type="file" name="csv_file" required accept=".csv, .xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                    <svg class="w-8 h-8 text-purple-600 dark:text-glow-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                    <svg class="w-8 h-8 text-rose-600 dark:text-glow-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                     <p class="text-slate-900 dark:text-white text-sm font-semibold">Click or upload file</p>
                     <p class="text-slate-500 text-xs mt-1">.csv, .xlsx, .xls</p>
                 </div>

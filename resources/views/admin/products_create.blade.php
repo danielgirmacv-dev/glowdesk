@@ -11,7 +11,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             Back to Products
         </a>
-        <p class="text-purple-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
+        <p class="text-rose-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
         <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Add New Product</h1>
         <p class="text-slate-500 text-sm mt-1">Fill in the details to create a new store listing.</p>
     </div>

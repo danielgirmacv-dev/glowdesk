@@ -36,7 +36,7 @@
                 <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 flex flex-col-reverse sm:flex-row items-center sm:justify-between gap-6 sm:gap-10 w-full">
                     <!-- Text -->
                     <div class="flex-1 text-center sm:text-left flex flex-col items-center sm:items-start pt-2 sm:pt-0">
-                        <span class="text-[11px] font-bold text-purple-300 uppercase tracking-[0.15em] mb-2 px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-sm inline-block w-fit" x-text="product.category?.name || 'Skincare'"></span>
+                        <span class="text-[11px] font-bold text-pink-300 uppercase tracking-[0.15em] mb-2 px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-sm inline-block w-fit" x-text="product.category?.name || 'Skincare'"></span>
                         <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-2 leading-tight tracking-tight" x-text="product.name"></h2>
                         <p class="text-white/65 text-xs sm:text-sm max-w-md line-clamp-2 mb-5 font-normal leading-relaxed" x-text="product.description"></p>
                         <div class="flex items-center gap-4">
@@ -109,7 +109,7 @@
             <template x-for="category in categories" :key="category.name">
                 <button @click="activeCategory = category.name"
                         class="flex-shrink-0 px-4 py-2 md:py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 text-sm font-semibold"
-                        :class="activeCategory === category.name ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50/60 dark:hover:bg-white/10 shadow-xs'">
+                        :class="activeCategory === category.name ? 'chip-active' : 'bg-white dark:bg-white/5 border border-pink-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-white hover:bg-pink-50/60 dark:hover:bg-white/10 shadow-xs'">
                     
                     <span class="text-sm md:text-base leading-none" x-text="category.icon"></span>
                     <span class="text-[11px] md:text-sm whitespace-nowrap" x-text="category.name"></span>
@@ -129,22 +129,22 @@
             <div class="flex items-center gap-1.5 flex-shrink-0">
                 <button @click="sortBy='default'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='default' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
+                    :class="sortBy==='default' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-pink-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-white'">
                     Default
                 </button>
                 <button @click="sortBy='price_asc'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='price_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
+                    :class="sortBy==='price_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-pink-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-white'">
                     Br Low→High
                 </button>
                 <button @click="sortBy='price_desc'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='price_desc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
+                    :class="sortBy==='price_desc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-pink-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-white'">
                     Br High→Low
                 </button>
                 <button @click="sortBy='name_asc'"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                    :class="sortBy==='name_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-purple-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white'">
+                    :class="sortBy==='name_asc' ? 'chip-active' : 'bg-white dark:bg-white/5 border border-pink-200/80 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-white'">
                     A→Z
                 </button>
             </div>
@@ -157,7 +157,7 @@
         <!-- Products Grid -->
         <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             <template x-for="product in paginatedProducts" :key="product.id">
-                <div class="rounded-2xl overflow-hidden card-hover flex flex-col group border border-purple-100 dark:border-white/8 bg-white dark:bg-white/[0.03] shadow-[0_2px_12px_rgba(109,40,217,0.08)] dark:shadow-none">
+                <div class="rounded-2xl overflow-hidden card-hover flex flex-col group border border-pink-100 dark:border-white/8 bg-white dark:bg-white/[0.03] shadow-[0_2px_12px_rgba(193,28,106,0.08)] dark:shadow-none">
 
                     <div class="relative h-52 sm:h-56 overflow-hidden bg-slate-100 dark:bg-white/5 cursor-pointer flex items-center justify-center" @click="openModal(product)">
                         <template x-if="product.image_url">
@@ -165,8 +165,8 @@
                         </template>
                         <template x-if="!product.image_url">
                             <div class="w-full h-full flex items-center justify-center">
-                                <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-purple-100 dark:bg-white/10">
-                                    <svg class="w-7 h-7 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-pink-100 dark:bg-white/10">
+                                    <svg class="w-7 h-7 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                 </div>
                             </div>
                         </template>
@@ -286,7 +286,7 @@
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight" x-text="selectedProduct?.name"></h2>
 
                 <div class="flex items-center gap-4 mb-4">
-                    <div class="px-3.5 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-base shadow-xs">
+                    <div class="px-3.5 py-1.5 rounded-xl bg-rose-600 text-white font-bold text-base shadow-xs">
                         <span x-text="'Br ' + parseFloat(selectedProduct?.price ?? 0).toFixed(2)"></span>
                     </div>
                 </div>
@@ -380,8 +380,8 @@
                      <div>
                          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Full Name</label>
                          <template x-if="$store.telegram.isTMA">
-                          <div class="mb-4 p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/40 flex items-center gap-2 text-xs text-purple-700 dark:text-purple-300">
-                              <svg class="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.42.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 4-1.74 6.68-2.88 8.04-3.44 3.83-1.58 4.62-1.85 5.14-1.86.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.01.24-.04.38z"/></svg>
+                          <div class="mb-4 p-2.5 rounded-xl bg-pink-50 dark:bg-pink-950/30 border border-pink-200 dark:border-pink-800/40 flex items-center gap-2 text-xs text-rose-700 dark:text-pink-300">
+                              <svg class="w-4 h-4 text-rose-600 dark:text-rose-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.42.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 4-1.74 6.68-2.88 8.04-3.44 3.83-1.58 4.62-1.85 5.14-1.86.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.01.24-.04.38z"/></svg>
                               <span>Telegram Connected: <strong><span x-text="$store.telegram.user.name"></span></strong> (@<span x-text="$store.telegram.user.username"></span>)</span>
                           </div>
                       </template>
@@ -406,7 +406,7 @@
                      </div>
 
                      <div class="pt-3 flex gap-3">
-                         <button type="submit" :disabled="isSubmitting" class="w-full relative group overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3.5 font-bold transition hover:brightness-105 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed">
+                         <button type="submit" :disabled="isSubmitting" class="w-full relative group overflow-hidden rounded-xl bg-gradient-to-r from-rose-600 to-pink-500 text-white py-3.5 font-bold transition hover:brightness-105 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed">
                              <template x-if="!isSubmitting">
                                  <span class="relative z-10 flex items-center justify-center gap-2">
                                      Complete Order
@@ -433,7 +433,7 @@
     <button @click="openContactModal()" 
             class="fixed bottom-6 left-6 z-50 px-5 py-3 rounded-full flex items-center gap-2.5 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all group font-semibold text-xs sm:text-sm bg-slate-900/80 dark:bg-white/10 backdrop-blur-xl border border-white/15 hover:bg-slate-900 dark:hover:bg-white/20" 
             title="Custom Order">
-        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-rose-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
         </svg>
         <span class="tracking-wide">Custom Order</span>
@@ -490,7 +490,7 @@
                      </div>
 
                      <div class="pt-2">
-                         <button type="submit" class="w-full relative group overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:brightness-105 text-white py-3.5 font-bold transition shadow-sm">
+                         <button type="submit" class="w-full relative group overflow-hidden rounded-xl bg-gradient-to-r from-rose-600 to-pink-500 hover:brightness-105 text-white py-3.5 font-bold transition shadow-sm">
                              <span class="relative z-10 flex items-center justify-center gap-2">
                                  Submit Custom Order
                                  <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>

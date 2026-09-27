@@ -8,12 +8,8 @@
 
         <!-- Logo -->
         <div class="text-center mb-8">
-            <div class="w-16 h-16 rounded-2xl glow-gradient flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2s-4 2-4 8c0 4 4 12 4 12s4-8 4-12c0-6-4-8-4-8z"/>
-                    <path d="M14 4s4 4 4 8c0 3-2 6-6 10"/>
-                    <path d="M10 4s-4 4-4 8c0 3 2 6 6 10"/>
-                </svg>
+            <div class="flex justify-center mb-4">
+                <img src="/glowaddis-logo.png" alt="GlowAddis" class="h-20 w-auto object-contain drop-shadow-md" style="max-width:160px;">
             </div>
             <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Admin Access</h1>
             <p class="text-slate-500 text-sm mt-1">Enter your password to continue</p>

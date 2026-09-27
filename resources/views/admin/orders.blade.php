@@ -8,7 +8,7 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <p class="text-purple-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
+            <p class="text-rose-600 dark:text-glow-400 text-xs font-semibold uppercase tracking-widest mb-1">Admin Panel</p>
             <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Orders</h1>
             <p class="text-slate-500 text-sm mt-1">{{ $orders->count() }} total order{{ $orders->count() !== 1 ? 's' : '' }}</p>
         </div>
@@ -60,11 +60,11 @@
                 </thead>
                 <tbody class="divide-y divide-slate-200/80 dark:divide-white/5">
                     @foreach($orders as $order)
-                    <tr class="hover:bg-purple-50/40 dark:hover:bg-white/[0.02] transition-colors group" id="order-row-{{ $order->id }}">
+                    <tr class="hover:bg-pink-50/40 dark:hover:bg-white/[0.02] transition-colors group" id="order-row-{{ $order->id }}">
 
                         <!-- Order ID & Time -->
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <p class="text-purple-700 dark:text-glow-400 text-xs font-bold font-mono">#GD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</p>
+                            <p class="text-rose-700 dark:text-glow-400 text-xs font-bold font-mono">#GD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</p>
                             <p class="text-slate-500 text-xs mt-0.5">{{ $order->created_at->diffForHumans() }}</p>
                         </td>
 
@@ -222,11 +222,11 @@
                     </div>
                     <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
                         <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Phone</p>
-                        <p class="text-purple-700 dark:text-glow-400 font-semibold text-sm" x-text="modal.order?.phone"></p>
+                        <p class="text-rose-700 dark:text-glow-400 font-semibold text-sm" x-text="modal.order?.phone"></p>
                     </div>
                     <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200/80 dark:border-white/10">
                         <p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Total</p>
-                        <p class="text-purple-700 dark:text-glow-400 font-bold text-sm" x-text="'Br ' + parseFloat(modal.order?.total_amount ?? 0).toFixed(2)"></p>
+                        <p class="text-rose-700 dark:text-glow-400 font-bold text-sm" x-text="'Br ' + parseFloat(modal.order?.total_amount ?? 0).toFixed(2)"></p>
                     </div>
                 </div>
 
