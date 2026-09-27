@@ -1,6 +1,41 @@
 @extends('layouts.app')
 
-@section('title', 'Shop')
+@section('title', 'GlowAddis – Beauty delivered to your desk')
+
+@section('meta')
+    <meta name="description" content="Discover and order premium cosmetics and beauty products effortlessly from GlowAddis. Direct delivery in Addis Ababa.">
+    <link rel="canonical" href="{{ url('/') }}">
+    <meta property="og:site_name" content="GlowAddis">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GlowAddis – Beauty delivered to your desk">
+    <meta property="og:description" content="Discover and order premium cosmetics and beauty products effortlessly from GlowAddis.">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:image" content="{{ url('/glowaddis-logo.png') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GlowAddis – Beauty delivered to your desk">
+    <meta name="twitter:description" content="Discover and order premium cosmetics and beauty products effortlessly from GlowAddis.">
+    <meta name="twitter:image" content="{{ url('/glowaddis-logo.png') }}">
+
+    <!-- Schema.org Store / WebSite JSON-LD -->
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@' . 'context' => 'https://schema.org',
+        '@' . 'type' => 'Store',
+        'name' => 'GlowAddis',
+        'url' => url('/'),
+        'logo' => url('/glowaddis-logo.png'),
+        'description' => 'Premium cosmetics and beauty store in Addis Ababa.',
+        'priceRange' => '$$',
+        'currenciesAccepted' => 'ETB',
+        'paymentAccepted' => 'Cash, Mobile Payment',
+        'potentialAction' => [
+            '@' . 'type' => 'SearchAction',
+            'target' => url('/') . '?q={search_term_string}',
+            'query-input' => 'required name=search_term_string',
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+@endsection
 
 @section('content')
 {{-- Pre-declare products for Alpine before components initialize --}}
@@ -159,8 +194,47 @@
             </span>
         </div>
 
-        <!-- Products Grid -->
-        <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Products Grid Container -->
+        {{-- 1. Server-Side Rendered (SSR) Grid for Crawlers, Bots & View-Source --}}
+        <div id="ssr-product-grid" x-show="!isAlpineReady" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            @foreach($products as $product)
+                <div class="rounded-2xl overflow-hidden card-hover flex flex-col group border border-pink-100 dark:border-white/8 bg-white dark:bg-white/[0.03] shadow-[0_2px_12px_rgba(193,28,106,0.08)] dark:shadow-none">
+                    <a href="{{ $product->url }}" class="relative h-52 sm:h-56 overflow-hidden bg-slate-100 dark:bg-white/5 flex items-center justify-center">
+                        @if($product->image_url)
+                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy" class="object-cover w-full h-full group-hover:scale-[1.08] transition-transform duration-500 ease-out">
+                        @else
+                            <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-pink-100 dark:bg-white/10">
+                                <svg class="w-7 h-7 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                            </div>
+                        @endif
+                        <div class="absolute top-2.5 left-2.5">
+                            @if($product->is_active)
+                                <span class="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide shadow-xs">In Stock</span>
+                            @else
+                                <span class="bg-slate-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide shadow-xs">Out of Stock</span>
+                            @endif
+                        </div>
+                        <div class="absolute top-2.5 right-2.5">
+                            <span class="bg-slate-900/85 dark:bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm">Br {{ number_format($product->price, 2) }}</span>
+                        </div>
+                    </a>
+                    <div class="p-3.5 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm text-slate-900 dark:text-white leading-tight mb-1 line-clamp-2">
+                            <a href="{{ $product->url }}" class="hover:text-rose-600 dark:hover:text-pink-400 transition-colors">{{ $product->name }}</a>
+                        </h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed flex-grow line-clamp-2 mb-3 font-normal">{{ $product->description }}</p>
+                        <div class="flex gap-1.5 items-stretch">
+                            <a href="{{ $product->url }}" class="flex-1 btn-glow text-white text-xs font-semibold py-2 rounded-xl flex items-center justify-center transition-all text-center">
+                                View Details & Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- 2. Client-Side Reactive Alpine Grid (Hydrated) --}}
+        <div id="alpine-product-grid" x-show="isAlpineReady" x-cloak class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             <template x-for="product in paginatedProducts" :key="product.id">
                 <div class="rounded-2xl overflow-hidden card-hover flex flex-col group border border-pink-100 dark:border-white/8 bg-white dark:bg-white/[0.03] shadow-[0_2px_12px_rgba(193,28,106,0.08)] dark:shadow-none">
 
@@ -546,6 +620,7 @@ function shopManager() {
     const perPage = 20;
 
     return {
+        isAlpineReady: false,
         products: allProducts,
         search: '',
         sortBy: 'default',
@@ -629,6 +704,7 @@ function shopManager() {
         },
 
         init() {
+            this.isAlpineReady = true;
             this.$watch('search', () => { this.currentPage = 1; });
             this.$watch('sortBy', () => { this.currentPage = 1; });
             this.$watch('activeCategory', () => { this.currentPage = 1; });

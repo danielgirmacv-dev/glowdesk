@@ -12,6 +12,8 @@ use App\Http\Middleware\BasicAdminAuth;
 Route::middleware([RestrictLan::class])->group(function () {
     
     Route::get('/', [ProductController::class, 'index'])->name('shop.index');
+    Route::get('/products/{product}/{slug?}', [ProductController::class, 'show'])->name('shop.product');
+    Route::get('/sitemap.xml', [ProductController::class, 'sitemap'])->name('shop.sitemap');
     Route::get('/orders', function () { return redirect()->route('shop.index'); });
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::post('/custom-request', [OrderController::class, 'submitCustomRequest'])->name('custom-request.store');

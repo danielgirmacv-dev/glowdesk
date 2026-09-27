@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\ProductSnapshotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -13,6 +14,51 @@ class ProductController extends Controller
     {
         $products = Product::where('is_active', true)->get();
         return view('shop.index', compact('products'));
+    }
+
+    public function show(Product $product, ?string $slug = null)
+    {
+        $snapshotService = app(ProductSnapshotService::class);
+        if (!$product->is_active) {
+            abort(404);
+        }
+
+        // Canonical 301 redirect if slug is missing or doesn't match
+        if ($slug !== $product->slug) {
+            return redirect()->route('shop.product', [
+                'product' => $product->id,
+                'slug' => $product->slug,
+            ], 301);
+        }
+
+        // Check if static snapshot is cached on disk
+        $cachedHtml = $snapshotService->getSnapshot($product);
+        if ($cachedHtml) {
+            return response($cachedHtml, 200, [
+                'Content-Type' => 'text/html; charset=UTF-8',
+                'X-Snapshot-Cache' => 'HIT',
+                'Cache-Control' => 'public, max-age=3600',
+            ]);
+        }
+
+        // On-demand generation & disk caching
+        $html = $snapshotService->generate($product);
+        return response($html, 200, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'X-Snapshot-Cache' => 'MISS',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
+    public function sitemap()
+    {
+        $products = Product::where('is_active', true)->orderBy('updated_at', 'desc')->get();
+        $xml = view('shop.sitemap', compact('products'))->render();
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
     }
 
     // Admin routes
@@ -66,6 +112,9 @@ class ProductController extends Controller
                 }
             }
             DB::commit();
+            try {
+                app(ProductSnapshotService::class)->generateAll();
+            } catch (\Throwable $e) {}
             return redirect()->route('admin.products')->with('success', "Successfully imported $count products.");
         } catch (\Exception $e) {
             DB::rollBack();
@@ -200,6 +249,9 @@ class ProductController extends Controller
     {
         $count = Product::count();
         Product::query()->delete();
+        try {
+            app(ProductSnapshotService::class)->clearAll();
+        } catch (\Throwable $e) {}
         return response()->json(['success' => true, 'message' => "All $count products deleted."]);
     }
 }

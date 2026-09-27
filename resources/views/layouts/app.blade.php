@@ -5,7 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="/glowdesk-logo.png">
-    <title>GlowAddis – @yield('title', 'Beauty Store')</title>
+    <title>@yield('title', 'GlowAddis – Beauty delivered to your desk')</title>
+    @hasSection('meta')
+        @yield('meta')
+    @else
+        <meta name="description" content="Discover and order premium cosmetics and beauty products effortlessly from GlowAddis.">
+        <link rel="canonical" href="{{ url()->current() }}">
+        <meta property="og:site_name" content="GlowAddis">
+        <meta property="og:title" content="GlowAddis – Beauty delivered to your desk">
+        <meta property="og:description" content="Discover and order premium cosmetics and beauty products effortlessly from GlowAddis.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="{{ url('/glowaddis-logo.png') }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="GlowAddis – Beauty delivered to your desk">
+        <meta name="twitter:description" content="Discover and order premium cosmetics and beauty products effortlessly from GlowAddis.">
+        <meta name="twitter:image" content="{{ url('/glowaddis-logo.png') }}">
+    @endif
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
