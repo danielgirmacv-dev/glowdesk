@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,24 +11,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Early Theme Init Script (Zero FOUC - Night Mode Default) -->
+    <!-- Early Theme Init Script (Zero FOUC - Day Mode Default) -->
     <script>
         (function() {
-            // Default is strictly Dark/Night Mode unless explicitly toggled to light
-            if (!localStorage.getItem('glowaddis_theme_v2')) {
-                localStorage.setItem('glowaddis_theme_v2', 'dark');
-                localStorage.setItem('glowaddis_theme', 'dark');
-                localStorage.setItem('glowdesk_theme', 'dark');
-                localStorage.setItem('theme', 'dark');
+            // Default is strictly Day / Light Mode when clients visit
+            var saved = localStorage.getItem('glowaddis_theme_v3');
+            if (!saved) {
+                saved = 'light';
+                localStorage.setItem('glowaddis_theme_v3', 'light');
+                localStorage.setItem('glowaddis_theme_v2', 'light');
+                localStorage.setItem('glowaddis_theme', 'light');
+                localStorage.setItem('glowdesk_theme', 'light');
+                localStorage.setItem('theme', 'light');
             }
-            var saved = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowaddis_theme_v2');
-            var theme = saved === 'light' ? 'light' : 'dark';
-            if (theme === 'light') {
-                document.documentElement.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-            } else {
+            var theme = saved === 'dark' ? 'dark' : 'light';
+            if (theme === 'dark') {
                 document.documentElement.classList.remove('light-mode');
                 document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.add('light-mode');
+                document.documentElement.classList.remove('dark');
             }
         })();
 
@@ -52,6 +54,7 @@
                 }
             }
             
+            localStorage.setItem('glowaddis_theme_v3', nextTheme);
             localStorage.setItem('glowaddis_theme_v2', nextTheme);
             localStorage.setItem('glowaddis_theme', nextTheme);
             localStorage.setItem('glowdesk_theme', nextTheme);
@@ -735,14 +738,15 @@
         document.addEventListener('alpine:init', () => {
             Alpine.store('theme', {
                 current: (function() {
-                    var saved = localStorage.getItem('glowaddis_theme') || localStorage.getItem('glowaddis_theme_v2');
-                    return saved === 'light' ? 'light' : 'dark';
+                    var saved = localStorage.getItem('glowaddis_theme_v3') || localStorage.getItem('glowaddis_theme');
+                    return saved === 'dark' ? 'dark' : 'light';
                 })(),
                 init() {
                     this.apply();
                 },
                 toggle() {
                     this.current = this.current === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem('glowaddis_theme_v3', this.current);
                     localStorage.setItem('glowaddis_theme_v2', this.current);
                     localStorage.setItem('glowaddis_theme', this.current);
                     localStorage.setItem('glowdesk_theme', this.current);
@@ -750,7 +754,8 @@
                     this.apply();
                 },
                 set(val) {
-                    this.current = val === 'light' ? 'light' : 'dark';
+                    this.current = val === 'dark' ? 'dark' : 'light';
+                    localStorage.setItem('glowaddis_theme_v3', this.current);
                     localStorage.setItem('glowaddis_theme_v2', this.current);
                     localStorage.setItem('glowaddis_theme', this.current);
                     localStorage.setItem('glowdesk_theme', this.current);
